@@ -120,6 +120,11 @@
 #' \code{\link{simulateDSFM1D}} / \code{\link{simulateDSFM2D}} are functions
 #' to simulate data that can be used as simple example purposes.
 #'
+#' @importFrom grDevices colorRampPalette
+#' @importFrom graphics axis.Date layout par persp plot
+#' @importFrom stats approx arima.sim rnorm sd ts
+#' @importFrom utils read.table tail
+#'
 #' @examples
 #' \dontrun{
 #' # Prepare the data --------------------------------------------------------- #
