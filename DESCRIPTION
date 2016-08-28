@@ -6,7 +6,7 @@ Date: 2016-08-18
 Authors@R: person("Marc", "Gumowski", email = "marc.gumowski@gmail.com",
   role = c("aut", "cre"))
 Description: This package is used to estimate models using a
-    Dynamic Semiparametric Factor Model (DSFM) with 1 and 2
+    Dynamic Semiparametric Factor Model (DSFM) for 1 and 2
     dimensions. The procedure uses Kernel density estimation for the
     non-parametric functions of the model, following the
     iterative algorithm of Fengler and al. (2007).
