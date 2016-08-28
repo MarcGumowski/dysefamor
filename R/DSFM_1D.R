@@ -57,7 +57,7 @@
 #'
 #' @return \code{DSFM1D} returns an object of class \code{"DSFM1D"}.
 #'
-#' The generic functions \code{print},\code{summary}, \code{plot} and
+#' The generic functions \code{print}, \code{summary}, \code{plot} and
 #' \code{predict} are available.
 #'
 #' An object of class \code{"DSFM1D"} is a list containing the following
@@ -86,18 +86,18 @@
 #' @author The implementation of model by Marc Gumowski was based on
 #' Fengler and al. (2007).
 #'
-#' @references Fengler, Matthias R, Wolfgang K Haerdle, and Enno Mammen (2007).
+#' @references Borak, Szymon, Matthias R. Fengler, and Wolfgang K. Haerdle (2005)."DSFM
+#' Fitting of Implied Volatility Surfaces". In: \emph{5th International
+#' Conference on Intelligent Systems Design and Applications (ISDA'05)},
+#' pp. 526-531. IEEE.
+#'
+#' Fengler, Matthias R, Wolfgang K Haerdle, and Enno Mammen (2007).
 #' "A Semiparametric Factor Model for Implied Volatility Surface Dynamics".
 #' In: \emph{Journal of Financial Econometrics 5.2}, pp. 189-218.
 #'
 #' Haerdle, Wolfgang K., and Piotr Majer (2014).
 #' "Yield Curve Modeling and Forecasting using Semiparametric Factor Dynamics".
 #' In: \emph{The European Journal of Finance}, pp. 1-21.
-#'
-#' Borak, Szymon, Matthias R. Fengler, and Wolfgang K. Haerdle (2005)."DSFM
-#' Fitting of Implied Volatility Surfaces". In: \emph{5th International
-#' Conference on Intelligent Systems Design and Applications (ISDA'05)},
-#' pp. 526-531. IEEE.
 #'
 #' @seealso \code{\link{summary.DSFM1D}} for
 #' summaries and \code{\link{plot.DSFM1D}} for plot
@@ -965,7 +965,7 @@ simulateDSFM1D <- function(model = "ns", n = 100, x1 = 1:30, L = 3,
 #' @param x1 a numeric vector of the covariates.
 #'
 #' @return \code{dataDSFM1D} returns a list, which belongs to the class
-#' \code{"DSFM1DData"}. The list contains the dates, the responses and
+#' \code{"DSFM1DData"}. The list contains the dates, the responses, and
 #' the covariates in three distinct columns.
 #'
 #' The generic functions \code{print},\code{summary}, and \code{plot}
@@ -1062,7 +1062,7 @@ print.DSFM1DData <- function(x, ...) {
 #' @param object an object of class \code{"DSFM1DData"}.
 #' @param ... further arguments passed to or from other methods.
 #'
-#' @return The function \code{summary.DSFM1DData} returns a summary
+#' @return The function \code{summary.DSFM1DData} returns summary
 #' statistics of the data set given in \code{object}.
 #'
 #' @seealso \code{\link{dataDSFM1D}}, \code{\link{plot.DSFM1DData}}.

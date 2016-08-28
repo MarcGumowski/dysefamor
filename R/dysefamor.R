@@ -1,7 +1,7 @@
 #' dysefamor: Estimation Algorithm of Dynamic Semiparametric Factor Model
 #'
-#' The dysefamor package provides DSFM fits for one-dimensional data and
-#' DSFM fits for two-dimensional data.
+#' The dysefamor package provides DSFM for one-dimensional and
+#' two-dimensional data.
 #'
 #' @section Main Function:
 #'
