@@ -126,6 +126,9 @@
 #' @importFrom utils read.table tail
 #'
 #' @examples
+#'
+#' ## One-Dimensional Data #################################################### #
+#'
 #' # Prepare the data --------------------------------------------------------- #
 #' # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 #' data(canadianYieldCurves)
@@ -135,6 +138,27 @@
 #'
 #' # Set the parameters ------------------------------------------------------- #
 #' h        <- 0.167
+#' L        <- 3
+#'
+#' # Fit the model ------------------------------------------------------------ #
+#' dsfmFit  <- DSFM(dsfmData, h = h, L = L)
+#' summary(dsfmFit)
+#' plot(dsfmFit)
+#'
+#' # Perform prediction ------------------------------------------------------- #
+#' horizon  <- 5
+#' predict(dsfmFit, nAhead = horizon)
+#'
+#'
+#'
+#' ## Two-Dimensional Data #################################################### #
+#'
+#'#' # Prepare the data --------------------------------------------------------- #
+#' simulatedData <- simulateDSFM2D()
+#' dsfmData      <- simulatedData$dataSim
+#'
+#' # Set the parameters ------------------------------------------------------- #
+#' h        <- c(0.05,0.05)
 #' L        <- 3
 #'
 #' # Fit the model ------------------------------------------------------------ #
