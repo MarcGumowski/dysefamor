@@ -1,0 +1,30 @@
+#' dysefamor: Estimation Algorithm of Dynamic Semiparametric Factor Model
+#'
+#' The dysefamor package provides two categories of important functions:
+#' DSFM for one-dimensional data and DSFM for two-dimensional data.
+#'
+#' @section DSFM1D functions:
+#' \itemize{
+#' \item{\code{\link{dataDSFM1D}}}
+#' \item{\code{\link{summary.DSFM1DData}}}
+#' \item{\code{\link{plot.DSFM1DData}}}
+#' \item{\code{\link{DSFM1D}}}
+#' \item{\code{\link{summary.DSFM1D}}}
+#' \item{\code{\link{plot.DSFM1D}}}
+#' \item{\code{\link{predict.DSFM1D}}}
+#' }
+#'
+#' @section DSFM2D functions:
+#' \itemize{
+#' \item{\code{\link{dataDSFM2D}}}
+#' \item{\code{\link{summary.DSFM2DData}}}
+#' \item{\code{\link{plot.DSFM2DData}}}
+#' \item{\code{\link{DSFM2D}}}
+#' \item{\code{\link{summary.DSFM2D}}}
+#' \item{\code{\link{plot.DSFM2D}}}
+#' \item{\code{\link{predict.DSFM2D}}}
+#' }
+#'
+#' @docType package
+#' @name dysefamor
+NULL

@@ -1,0 +1,15 @@
+citHeader("To cite dysefamor in publications use:")
+
+citEntry(entry = "MastersThesis",
+  title        = "Yield Curve Estimation using Dynamic Semiparametric Factor Model and its Implementation in R",
+  author       = personList(as.person("Marc Gumowski")),
+  school       = "Geneva School of Economics and Management, University of Geneva",
+  year         = "2016",
+  note         = "R package version 0.0.0.9000",
+
+  textVersion  =
+  paste("Marc Gumowski (2016).",
+        "Yield Curve Estimation using Dynamic Semiparametric Factor Model and its Implementation in R.",
+        "Unpublished master's thesis.",
+        "Geneva School of Economics and Management, University of Geneva.")
+)

@@ -1,0 +1,23 @@
+Package: dysefamor
+Type: Package
+Title: dysefamor: Estimation Algorithm of Dynamic Semiparametric Factor Model
+Version: 0.0.0.9000
+Date: 2016-08-18
+Authors@R: person("Marc", "Gumowski", email = "marc.gumowski@gmail.com",
+  role = c("aut", "cre"))
+Description: This package is used to estimate models using a
+    Dynamic Semiparametric Factor Model (DSFM) with 1 and 2
+    dimensions. The procedure uses Kernel density estimation for the
+    non-parametric functions of the model, following the
+    iterative algorithm of Fengler and al. (2007).
+Depends:
+    R (>= 3.1.0)
+Imports:
+    akima (>= 0.5.12),
+    MASS (>= 7.3.39),
+    vars (>= 1.5.2)
+License: GPL (>= 2)
+RoxygenNote: 5.0.1
+LazyData: true
+URL: http://github.com/MarcGumowski/dysefamor
+BugReports: http://github.com/MarcGumowski/dysefamor/issues
