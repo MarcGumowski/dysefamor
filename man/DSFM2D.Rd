@@ -85,7 +85,6 @@ The goodness-of-fit is measured by the Root Mean Squared Error (RMSE). The
 proper definition of each criterion can be found in references.
 }
 \examples{
-\dontrun{
 # Prepare the data --------------------------------------------------------- #
 simulatedData <- simulateDSFM2D()
 dsfmData      <- simulatedData$dataSim
@@ -102,7 +101,6 @@ plot(dsfmFit)
 # Perform prediction ------------------------------------------------------- #
 horizon  <- 5
 predict(dsfmFit, nAhead = horizon)
-}
 
 }
 \author{

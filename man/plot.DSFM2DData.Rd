@@ -4,12 +4,12 @@
 \alias{plot.DSFM2DData}
 \title{Plot Method for an \code{DSFM2DData} Object}
 \usage{
-\method{plot}{DSFM2DData}(object, n = 1, pal = "pink", theta = 40,
+\method{plot}{DSFM2DData}(x, n = 1, pal = "pink", theta = 40,
   border = NA, box = T, shade = 0.2, expand = 0.5,
   ticktype = "simple", ...)
 }
 \arguments{
-\item{object}{an object of class \code{"DSFM2DData"}.}
+\item{x}{an \code{object} of class \code{"DSFM2DData"}.}
 
 \item{n}{number of time indicator to be plotted.}
 

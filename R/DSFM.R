@@ -126,7 +126,6 @@
 #' @importFrom utils read.table tail
 #'
 #' @examples
-#' \dontrun{
 #' # Prepare the data --------------------------------------------------------- #
 #' # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 #' data(canadianYieldCurves)
@@ -146,7 +145,8 @@
 #' # Perform prediction ------------------------------------------------------- #
 #' horizon  <- 5
 #' predict(dsfmFit, nAhead = horizon)
-#' }
+#'
+#' @export
 #'
 DSFM <- function(data, numDataPoints = 25, h = 0.05, L = 3,
                          initialLoad = "WN", tol = 1e-5, maxIt = 301) {
@@ -192,6 +192,8 @@ DSFM <- function(data, numDataPoints = 25, h = 0.05, L = 3,
 #' @param x a matrix.
 #' @param n the power.
 #'
+#' @export
+#'
 "%^%" <- function(x,n) {
   with(eigen(x), vectors %*% (values^n * t(vectors)))
 }
@@ -212,6 +214,9 @@ DSFM <- function(data, numDataPoints = 25, h = 0.05, L = 3,
 #' @references Lukasz Komsta and Frederick Novomestky (2015). moments: Moments,
 #' cumulants, skewness, kurtosis and related tests. R package
 #' version 0.14. http://CRAN.R-project.org/package=moments
+#'
+#' @export
+#'
 skewness <- function(x, na.rm = FALSE) {
   if (is.matrix(x))
     apply(x, 2, skewness, na.rm = na.rm)
@@ -240,6 +245,9 @@ skewness <- function(x, na.rm = FALSE) {
 #' @references Lukasz Komsta and Frederick Novomestky (2015). moments: Moments,
 #' cumulants, skewness, kurtosis and related tests. R package
 #' version 0.14. http://CRAN.R-project.org/package=moments
+#'
+#' @export
+#'
 
 kurtosis <- function(x, na.rm = FALSE) {
   if (is.matrix(x))
@@ -266,6 +274,9 @@ kurtosis <- function(x, na.rm = FALSE) {
 #' @param x a numeric vector.
 #'
 #' @family kernel functions
+#'
+#' @export
+#'
 NormalKernel1D <- function(x) {
   kernel1D <- (1/sqrt(2*pi)) * exp(-0.5 * x^2)
   kernel1D
@@ -280,6 +291,9 @@ NormalKernel1D <- function(x) {
 #' @param x a numeric vector.
 #'
 #' @family kernel functions
+#'
+#' @export
+#'
 QuarticKernel1D <- function(x) {
   quartic1D <- ifelse(abs(x) <= 1, (15 / 16) * (1 - x^2)^2, 0)
   quartic1D
@@ -308,6 +322,9 @@ QuarticKernel1D <- function(x) {
 #' @references Fengler, Matthias R, Wolfgang K Haerdle, and Enno Mammen (2007).
 #' "A Semiparametric Factor Model for Implied Volatility Surface Dynamics".
 #' In: \emph{Journal of Financial Econometrics 5.2}, pp. 189-218.
+#'
+#' @export
+#'
 KernelDensity1D <- function(y, I, J, x1, u, U, h) {
 
   pTHat <- matrix(0, I, U)
@@ -359,6 +376,9 @@ KernelDensity1D <- function(y, I, J, x1, u, U, h) {
 #' Fitting of Implied Volatility Surfaces". In: \emph{5th International
 #' Conference on Intelligent Systems Design and Applications (ISDA'05)},
 #' pp. 526-531. IEEE.
+#'
+#' @export
+#'
 KernelDensity2D <- function(y, I, J, x1, x2, u, U, h) {
 
   pTHat <- matrix(0, I, U)

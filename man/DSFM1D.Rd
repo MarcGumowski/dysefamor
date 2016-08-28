@@ -91,7 +91,6 @@ The goodness-of-fit is measured by the Root Mean Squared Error (RMSE). The
 proper definition of each criterion can be found in references.
 }
 \examples{
-\dontrun{
 # Prepare the data --------------------------------------------------------- #
 # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 data(canadianYieldCurves)
@@ -112,7 +111,6 @@ plot(dsfmFit)
 # Perform prediction ------------------------------------------------------- #
 horizon  <- 5
 predict(dsfmFit, nAhead = horizon)
-}
 
 }
 \author{

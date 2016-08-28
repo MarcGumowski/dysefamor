@@ -4,10 +4,12 @@
 \alias{summary.DSFM2D}
 \title{Summarizing DSFM Fits for Two-Dimensional Data}
 \usage{
-\method{summary}{DSFM2D}(object)
+\method{summary}{DSFM2D}(object, ...)
 }
 \arguments{
 \item{object}{an object of class \code{"DSFM2D"}.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 The function \code{summary.DSFM2D} returns a list of summary

@@ -4,12 +4,12 @@
 \alias{plot.DSFM1D}
 \title{Plot Diagnostics for a DSFM1D Object}
 \usage{
-\method{plot}{DSFM1D}(object, which = "all", ask = TRUE, pal = "pink",
+\method{plot}{DSFM1D}(x, which = "all", ask = TRUE, pal = "pink",
   col = "#016C59", type = "l", theta = 40, border = NA, box = T,
   shade = 0.2, expand = 0.5, ticktype = "detailed", ...)
 }
 \arguments{
-\item{object}{an object of class \code{"DSFM1D"}.}
+\item{x}{an \code{object} of class \code{"DSFM1D"}.}
 
 \item{which}{to choose between \code{"all"},\code{"loadings"}.
 \code{"functions"},\code{"convergence"}, and \code{"fit"}.}

@@ -108,7 +108,6 @@
 #' as simple example purposes.
 #'
 #' @examples
-#' \dontrun{
 #' # Prepare the data --------------------------------------------------------- #
 #' simulatedData <- simulateDSFM2D()
 #' dsfmData      <- simulatedData$dataSim
@@ -125,7 +124,8 @@
 #' # Perform prediction ------------------------------------------------------- #
 #' horizon  <- 5
 #' predict(dsfmFit, nAhead = horizon)
-#' }
+#'
+#' @export
 #'
 DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
                    initialLoad = "WN", tol = 1e-5, maxIt = 301) {
@@ -393,27 +393,29 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
 
 # Print Function -------------------------------------------------------------- #
 
-print.DSFM2D <- function(object, ...){
+#' @export
+#'
+print.DSFM2D <- function(x, ...){
 
   cat("Call:\n")
-  print(object$call)
+  print(x$call)
   cat("\nY:\n")
-  print(object$Y)
+  print(x$Y)
   cat("\nEstimated Y:\n")
-  print(object$YHat)
+  print(x$YHat)
   cat("\nEstimated Z:\n")
-  print(object$ZHat)
+  print(x$ZHat)
   cat("\nEstimated m:\n")
-  print(object$mHat)
+  print(x$mHat)
   cat("\nExplained Variance:\n")
-  print(object$EV, row.names = F)
+  print(x$EV, row.names = F)
   cat("\nRoot Mean Squared Error:\n")
-  print(object$RMSE, row.names = F)
+  print(x$RMSE, row.names = F)
   cat("\nBandwidth:\n")
-  print(object$Bw, row.names = F)
-  cat("\nIterations:",object$Iterations,"\n")
+  print(x$Bw, row.names = F)
+  cat("\nIterations:",x$Iterations,"\n")
   cat("\n")
-  print(object$Time)
+  print(x$Time)
 }
 
 # Summary Function ------------------------------------------------------------ #
@@ -423,6 +425,7 @@ print.DSFM2D <- function(object, ...){
 #' \code{summary} method for class \code{"DSFM2D"}.
 #'
 #' @param object an object of class \code{"DSFM2D"}.
+#' @param ... further arguments passed to or from other methods.
 #'
 #' @return The function \code{summary.DSFM2D} returns a list of summary
 #' statistics of the fitted DSFM given in \code{object}, using the components
@@ -437,13 +440,9 @@ print.DSFM2D <- function(object, ...){
 #' @seealso \code{\link{dataDSFM2D}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
 #' \code{\link{plot.DSFM2D}}, \code{\link{predict.DSFM2D}}.
 #'
-summary.DSFM2D <- function(object) {
-
-  # INPUTS -------------------------------------------------------------------- #
-  #
-  # object : An object of class DSFM2D, output of function DSFM2D().
-  #
-  # --------------------------------------------------------------------------- #
+#' @export
+#'
+summary.DSFM2D <- function(object, ...) {
 
   ZHat   <- object$ZHat[ ,2:length(object$ZHat)]
   L0     <- length(ZHat)
@@ -487,7 +486,7 @@ summary.DSFM2D <- function(object) {
 #' and a plot of the fit for a given time. By default, the four plots are
 #' provided.
 #'
-#' @param object an object of class \code{"DSFM1D"}.
+#' @param x an \code{object} of class \code{"DSFM1D"}.
 #' @param which to choose between \code{"all"},\code{"loadings"},
 #' #' \code{"functions"},\code{"convergence"}, and \code{"fit"}.
 #' @param n number of time indicator to be plotted.
@@ -521,16 +520,18 @@ summary.DSFM2D <- function(object) {
 #' @seealso \code{\link{dataDSFM2D}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
 #' \code{\link{summary.DSFM2D}}, \code{\link{predict.DSFM2D}}.
 #'
-plot.DSFM2D <- function(object, which = "all", n = 1, ask = TRUE, pal = "pink",
+#' @export
+#'
+plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
                         col = "#016C59", type = "l", theta = 40, border = NA,
                         box = T, shade = .2, expand = .5, ticktype = "detailed",
                         ...) {
 
-  date  <- unique(object$Data$Date)
-  L     <- dim(object$ZHat)[2] - 2
+  date  <- unique(x$Data$Date)
+  L     <- dim(x$ZHat)[2] - 2
   L0    <- L + 1
-  u1    <- unique(object$mHat[ ,1])
-  u2    <- unique(object$mHat[ ,2])
+  u1    <- unique(x$mHat[ ,1])
+  u2    <- unique(x$mHat[ ,2])
 
   par(ask = ask)
 
@@ -541,9 +542,9 @@ plot.DSFM2D <- function(object, which = "all", n = 1, ask = TRUE, pal = "pink",
   # Convergence Plot
   if ("convergence" %in% which) {
     layout(matrix(1))
-    N <- length(object$Convergence)
-    x <- 1:N
-    plot(x[(N - N * 0.95):N], object$Convergence[(N - N * 0.95):N],
+    N <- length(x$Convergence)
+    xAxis <- 1:N
+    plot(xAxis[(N - N * 0.95):N], x$Convergence[(N - N * 0.95):N],
          main = "Convergence of the algorithm",
          ylab = "Stopping Criterion", xlab = "Iteration",
          col = col, type = type, ...)
@@ -554,7 +555,7 @@ plot.DSFM2D <- function(object, which = "all", n = 1, ask = TRUE, pal = "pink",
     labDates <- seq(as.Date(date[1]), as.Date(tail(date, 1)), by = "year")
     layout(matrix(1:L, L, 1))
     for (l in 1:L) {
-      plot(as.Date(date),object$ZHat[ ,l + 2],
+      plot(as.Date(date),x$ZHat[ ,l + 2],
            main = bquote(hat(Z)[t*","*.(l)]),
            ylab = "", xlab = "Time", xaxt ="n",
            col = col, type = type, ...)
@@ -567,7 +568,7 @@ plot.DSFM2D <- function(object, which = "all", n = 1, ask = TRUE, pal = "pink",
     layout(matrix(1:(L0 + L0 %% 2),L0 %% 2 + L0 %/% 2, byrow = T))
     mHat <- list()
     for (l in 1:L0) {
-      mHat[[l]] <- matrix(object$mHat[ ,l + 2], length(u1), length(u2),
+      mHat[[l]] <- matrix(x$mHat[ ,l + 2], length(u1), length(u2),
                           byrow = T)
       persp(u1, u2, mHat[[l]], main = bquote(hat(m)[.(l-1)]), zlab="",
             theta = theta, border = border, box = box, shade = shade,
@@ -577,12 +578,12 @@ plot.DSFM2D <- function(object, which = "all", n = 1, ask = TRUE, pal = "pink",
   }
   if ("fit" %in% which) {
 
-    x1    <- unique(object$Data$x1[which(object$Data$Date == date[n])])
-    x2    <- unique(object$Data$x2[which(object$Data$Date == date[n])])
+    x1    <- unique(x$Data$x1[which(x$Data$Date == date[n])])
+    x2    <- unique(x$Data$x2[which(x$Data$Date == date[n])])
     J     <- length(x1) * length(x2)
-    Y     <- matrix(object$Data$y[which(object$Data$Date == date[n])],
+    Y     <- matrix(x$Data$y[which(x$Data$Date == date[n])],
                     length(x1), length(x2), byrow = T) # Get the y
-    YHat  <- matrix(object$YHat[which(object$YHat[ ,1] == date[n]), 2],
+    YHat  <- matrix(x$YHat[which(x$YHat[ ,1] == date[n]), 2],
                     length(x1), length(x2), byrow = T)
     switch(pal,
            pink = {
@@ -612,8 +613,8 @@ plot.DSFM2D <- function(object, which = "all", n = 1, ask = TRUE, pal = "pink",
     ncz <- ncol(Y)
     zFacet <- (Y[-1, -1] + Y[-1, -ncz] + Y[-nrz, -1] + Y[-nrz, -ncz]) / 4
     facetCol <- cut(zFacet, 200)
-    persp(x1, x2, Y, xlab = names(object$Data)[3], ylab = names(object$Data)[4],
-          zlab = names(object$Data)[2], col = color[facetCol],
+    persp(x1, x2, Y, xlab = names(x$Data)[3], ylab = names(x$Data)[4],
+          zlab = names(x$Data)[2], col = color[facetCol],
           main = paste("Y -", date[n]), theta = theta, border = border,
           box = box, shade = shade, expand = expand, ticktype = ticktype, ...)
 
@@ -622,8 +623,8 @@ plot.DSFM2D <- function(object, which = "all", n = 1, ask = TRUE, pal = "pink",
     zFacet <- (YHat[-1, -1] + YHat[-1, -ncz] + YHat[-nrz, -1] +
                  YHat[-nrz, -ncz]) / 4
     facetCol <- cut(zFacet, 200)
-    persp(x1, x2, YHat, xlab = names(object$Data)[3],
-          ylab = names(object$Data)[4], zlab = names(object$Data)[2],
+    persp(x1, x2, YHat, xlab = names(x$Data)[3],
+          ylab = names(x$Data)[4], zlab = names(x$Data)[2],
           col = color[facetCol],
           main = bquote(hat(Y) ~"-"~.(as.character(date)[n])), theta = theta,
           border = border, box = box, shade = shade, expand = expand,
@@ -676,6 +677,8 @@ plot.DSFM2D <- function(object, which = "all", n = 1, ask = TRUE, pal = "pink",
 #' Hiroshi Akima and Albrecht Gebhardt (2015). akima: Interpolation of
 #' Irregularly and Regularly Spaced Data. R package version 0.5-12.
 #' URL http://CRAN.R-project.org/package=akima
+#'
+#' @export
 #'
 predict.DSFM2D <- function(object, nAhead = 12,
                            x1Forecast = unique(object$mHat[ ,1]),
@@ -747,15 +750,17 @@ predict.DSFM2D <- function(object, nAhead = 12,
 
 # Print Function -------------------------------------------------------------- #
 
-print.predict.DSFM2D <- function(object, ...) {
+#' @export
+#'
+print.predict.DSFM2D <- function(x, ...) {
 
   cat("Call:\n")
-  print(object$call)
+  print(x$call)
   cat("\nForecasted Y:\n")
-  print(object$YHatForecastList)
+  print(x$YHatForecastList)
   cat("\nForecasted Z:\n")
-  print(object$ZHatForecast)
-  cat("\nHorizon:",object$nAhead)
+  print(x$ZHatForecast)
+  cat("\nHorizon:",x$nAhead)
 
 }
 
@@ -799,6 +804,8 @@ print.predict.DSFM2D <- function(object, ...) {
 #' \item{\code{m_l}}{the factors functions used to compute the DSFM.}
 #'
 #' @seealso \code{\link{dataDSFM2D}}, \code{\link{DSFM}}, \code{\link{DSFM2D}}.
+#'
+#' @export
 #'
 simulateDSFM2D <- function(n = 10 , x1 = 1:25 / 25, x2 = 1:25 / 25, L = 3,
                            var = 0.05) {
@@ -898,15 +905,9 @@ simulateDSFM2D <- function(n = 10 , x1 = 1:25 / 25, x2 = 1:25 / 25, L = 3,
 
 #' @seealso \code{\link{summary.DSFM2DData}}, \code{\link{plot.DSFM2DData}}.
 #'
+#' @export
+#'
 dataDSFM2D <- function(y,x1=NULL,x2=NULL) {
-
-  # INPUTS -------------------------------------------------------------------- #
-  #          y : Insert your y in a list of matrix format. y is a list.
-  #              1 matrix by day.
-  #
-  #         x1 : Vector of the coordinates x1.
-  #         x2 : Vector of the coordinates x2.
-  # --------------------------------------------------------------------------- #
 
   if (is.list(y) == FALSE) {
     if (dim(y)[2] == 4) {
@@ -930,18 +931,20 @@ dataDSFM2D <- function(y,x1=NULL,x2=NULL) {
 
 # Print Function -------------------------------------------------------------- #
 
-print.DSFM2DData <- function(object, ...) {
+#' @export
+#'
+print.DSFM2DData <- function(x, ...) {
 
   cat("Dataset of class DSFM2DData to be used in the DSFM() function.\n\n")
-  cat("Number of observations: ", length(unique(object$Date)), ".\n",
+  cat("Number of observations: ", length(unique(x$Date)), ".\n",
       sep = "")
   cat("Covariates range:\n")
-  cat("          - x1: from ", min(object$x1), " to ",
-      max(object$x1), ".", sep = "", "\n")
-  cat("          - x2: from ", min(object$x2), " to ",
-      max(object$x2), ".", sep = "", "\n")
-  cat("Time range: from ", as.character(object$Date[1]),
-      " to ", as.character(object$Date[length(object$Date)]), sep = "", ".\n")
+  cat("          - x1: from ", min(x$x1), " to ",
+      max(x$x1), ".", sep = "", "\n")
+  cat("          - x2: from ", min(x$x2), " to ",
+      max(x$x2), ".", sep = "", "\n")
+  cat("Time range: from ", as.character(x$Date[1]),
+      " to ", as.character(x$Date[length(x$Date)]), sep = "", ".\n")
 }
 
 # Summary Function ------------------------------------------------------------ #
@@ -951,6 +954,7 @@ print.DSFM2DData <- function(object, ...) {
 #' \code{summary} method for class \code{"DSFM2DData"}.
 #'
 #' @param object an object of class \code{"DSFM2DData"}.
+#' @param ... further arguments passed to or from other methods.
 #'
 #' @return The function \code{summary.DSFM2DData} returns a summary
 #' statistics of the data set given in \code{object} for each covariates
@@ -958,7 +962,9 @@ print.DSFM2DData <- function(object, ...) {
 #'
 #' @seealso \code{\link{dataDSFM2D}}, \code{\link{plot.DSFM2DData}}.
 #'
-summary.DSFM2DData <- function(object) {
+#' @export
+#'
+summary.DSFM2DData <- function(object, ...) {
 
   x1Summary <- data.frame(rbind(matrix(unlist(by(object$y,
                                                  object$x1,
@@ -1005,7 +1011,7 @@ summary.DSFM2DData <- function(object) {
 #' Plots the 3D vizualisation of the data set contained in \code{object} of class
 #' \code{DSFM2DData}.
 #'
-#' @param object an object of class \code{"DSFM2DData"}.
+#' @param x an \code{object} of class \code{"DSFM2DData"}.
 #' @param n number of time indicator to be plotted.
 #' @param pal the color palette for the fit plot. To choose between
 #' \code{"pink"},\code{"blue"},\code{"light"},\code{"dark"}.
@@ -1032,14 +1038,16 @@ summary.DSFM2DData <- function(object) {
 #'
 #' @seealso \code{\link{dataDSFM2D}}, \code{\link{summary.DSFM2DData}}.
 #'
-plot.DSFM2DData <- function(object, n = 1, pal = "pink", theta = 40,
+#' @export
+#'
+plot.DSFM2DData <- function(x, n = 1, pal = "pink", theta = 40,
                             border = NA, box = T, shade = .2, expand = .5,
                             ticktype = "simple", ...) {
 
-  x1    <- unique(object$x1[which(object$Date == unique(object$Date)[n])])
-  x2    <- unique(object$x2[which(object$Date == unique(object$Date)[n])])
+  x1    <- unique(x$x1[which(x$Date == unique(x$Date)[n])])
+  x2    <- unique(x$x2[which(x$Date == unique(x$Date)[n])])
   J     <- length(x1) * length(x2)
-  Y     <- matrix(object$y[which(object$Date == unique(object$Date)[n])],
+  Y     <- matrix(x$y[which(x$Date == unique(x$Date)[n])],
                   length(x1), length(x2), byrow = T)
 
   switch(pal,
@@ -1069,7 +1077,7 @@ plot.DSFM2DData <- function(object, n = 1, pal = "pink", theta = 40,
   facetCol <- cut(zFacet, 200)
   persp(x1, x2, Y, xlab = "x1", ylab = "x2",
         zlab = "Y", col = color[facetCol],
-        main = paste("Data -", unique(object$Date)[n]), theta = theta,
+        main = paste("Data -", unique(x$Date)[n]), theta = theta,
         border = border, box = box, shade = shade, expand = expand,
         ticktype = ticktype, ...)
 }

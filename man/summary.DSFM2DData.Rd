@@ -4,10 +4,12 @@
 \alias{summary.DSFM2DData}
 \title{Summarizing Two-Dimensional DSFM Data Set}
 \usage{
-\method{summary}{DSFM2DData}(object)
+\method{summary}{DSFM2DData}(object, ...)
 }
 \arguments{
 \item{object}{an object of class \code{"DSFM2DData"}.}
+
+\item{...}{further arguments passed to or from other methods.}
 }
 \value{
 The function \code{summary.DSFM2DData} returns a summary

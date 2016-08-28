@@ -114,7 +114,6 @@
 #' as simple example purposes.
 #'
 #' @examples
-#' \dontrun{
 #' # Prepare the data --------------------------------------------------------- #
 #' # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 #' data(canadianYieldCurves)
@@ -135,7 +134,8 @@
 #' # Perform prediction ------------------------------------------------------- #
 #' horizon  <- 5
 #' predict(dsfmFit, nAhead = horizon)
-#' }
+#'
+#' @export
 #'
 DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
                    initialLoad = "WN", tol = 1e-5, maxIt = 301) {
@@ -424,28 +424,30 @@ DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
 
 # Print Function -------------------------------------------------------------- #
 
-print.DSFM1D <- function(object, ...) {
+#' @export
+#'
+print.DSFM1D <- function(x, ...) {
 
   cat("Call:\n")
-  print(object$call)
+  print(x$call)
   cat("\nY:\n")
-  print(object$Y)
+  print(x$Y)
   cat("\nEstimated Y:\n")
-  print(object$YHat)
+  print(x$YHat)
   cat("\nEstimated Z:\n")
-  print(object$ZHat)
+  print(x$ZHat)
   cat("\nEstimated m:\n")
-  print(object$mHat)
+  print(x$mHat)
   cat("\nExplained Variance:\n")
-  print(object$EV, row.names = F)
+  print(x$EV, row.names = F)
   cat("\nRoot Mean Squared Error:\n")
-  print(object$RMSE, row.names = F)
+  print(x$RMSE, row.names = F)
   cat("\nBandwidth:\n")
-  print(object$Bw, row.names = F)
-  cat("\nCovavriates:",object$x1,"\n")
-  cat("\nIterations:",object$Iterations,"\n")
+  print(x$Bw, row.names = F)
+  cat("\nCovavriates:",x$x1,"\n")
+  cat("\nIterations:",x$Iterations,"\n")
   cat("\n")
-  print(object$Time)
+  print(x$Time)
 }
 
 # Summary Function ------------------------------------------------------------ #
@@ -455,6 +457,7 @@ print.DSFM1D <- function(object, ...) {
 #' \code{summary} method for class \code{"DSFM1D"}.
 #'
 #' @param object an object of class \code{"DSFM1D"}.
+#' @param ... further arguments passed to or from other methods.
 #'
 #' @return The function \code{summary.DSFM1D} returns a list of summary
 #' statistics of the fitted DSFM given in \code{object}, using the components
@@ -469,7 +472,9 @@ print.DSFM1D <- function(object, ...) {
 #' @seealso \code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
 #' \code{\link{plot.DSFM1D}}, \code{\link{predict.DSFM1D}}.
 #'
-summary.DSFM1D <- function(object) {
+#' @export
+#'
+summary.DSFM1D <- function(object, ...) {
 
   ZHat <- object$ZHat[ ,2:length(object$ZHat)]
   L0   <- length(ZHat)
@@ -515,7 +520,7 @@ summary.DSFM1D <- function(object) {
 #' estimated loadings for each factor, a plot of the estimated factor functions,
 #' and a plot of the fit. By default, the four plots are provided.
 #'
-#' @param object an object of class \code{"DSFM1D"}.
+#' @param x an \code{object} of class \code{"DSFM1D"}.
 #' @param which to choose between \code{"all"},\code{"loadings"}.
 #' \code{"functions"},\code{"convergence"}, and \code{"fit"}.
 #' @param ask logical; if TRUE, the user is asked before each plot, see
@@ -548,17 +553,19 @@ summary.DSFM1D <- function(object) {
 #' @seealso \code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
 #' \code{\link{summary.DSFM1D}}, \code{\link{predict.DSFM1D}}.
 #'
-plot.DSFM1D <- function(object, which = "all", ask = TRUE, pal = "pink",
+#' @export
+#'
+plot.DSFM1D <- function(x, which = "all", ask = TRUE, pal = "pink",
                         col = "#016C59", type = "l", theta = 40, border = NA,
                         box = T, shade = .2, expand = .5, ticktype = "detailed",
                         ...) {
 
-  date  <- unique(object$Y[ ,1])
-  I     <- dim(object$Y)[1] # T
-  L     <- dim(object$ZHat)[2] - 2
+  date  <- unique(x$Y[ ,1])
+  I     <- dim(x$Y)[1] # T
+  L     <- dim(x$ZHat)[2] - 2
   L0    <- L + 1
-  numDataPoints <- dim(object$mHat)[1]
-  u     <- object$mHat[,1]
+  numDataPoints <- dim(x$mHat)[1]
+  u     <- x$mHat[,1]
 
   par(ask = ask)
 
@@ -567,10 +574,10 @@ plot.DSFM1D <- function(object, which = "all", ask = TRUE, pal = "pink",
   }
   # Convergence Plot
   if ("convergence" %in% which) {
-    N <- length(object$Convergence)
-    x <- 1:N
+    N <- length(x$Convergence)
+    xAxis <- 1:N
     layout(matrix(1))
-    plot(x[(N - N*0.95):N], object$Convergence[(N - N * 0.95):N],
+    plot(xAxis[(N - N*0.95):N], x$Convergence[(N - N * 0.95):N],
          main = "Convergence of the algorithm",
          ylab = "Stopping Criterion", xlab = "Iteration",
          col = col, type = type, ...)
@@ -581,7 +588,7 @@ plot.DSFM1D <- function(object, which = "all", ask = TRUE, pal = "pink",
     labDates <- seq(as.Date(date[1]), as.Date(tail(date, 1)), by = "year")
     layout(matrix(1:L, L, 1))
     for (l in 1:L) {
-      plot(as.Date(date), object$ZHat[ ,l + 2],
+      plot(as.Date(date), x$ZHat[ ,l + 2],
            main = bquote(hat(Z)[t*","*.(l)]),
            ylab = "", xlab = "Time", xaxt ="n",
            col = col, type = type, ...)
@@ -593,7 +600,7 @@ plot.DSFM1D <- function(object, which = "all", ask = TRUE, pal = "pink",
   if ("functions" %in% which) {
     layout(matrix(1:(L0 + L0 %% 2), L0 %% 2 + L0 %/% 2, byrow = T))
     for (l in 1:L0) {
-      plot(u, object$mHat[[l + 1]],
+      plot(u, x$mHat[[l + 1]],
            main = bquote(hat(m)[.(l - 1)]),
            ylab = "", xlab = "u",
            col = col, type = type, ...)
@@ -602,12 +609,12 @@ plot.DSFM1D <- function(object, which = "all", ask = TRUE, pal = "pink",
   }
   # Y
   if ("fit" %in% which) {
-    I     <- dim(object$Y)[1]
-    J     <- dim(object$Y)[2] - 1
+    I     <- dim(x$Y)[1]
+    J     <- dim(x$Y)[2] - 1
     x1    <- seq(1, I) / I
-    x2    <- object$x1
-    Y     <- t(t(object$Y[ ,2:dim(object$Y)[2]]))
-    YHat  <- t(t(object$YHat[ ,2:dim(object$Y)[2]]))
+    x2    <- x$x1
+    Y     <- t(t(x$Y[ ,2:dim(x$Y)[2]]))
+    YHat  <- t(t(x$YHat[ ,2:dim(x$Y)[2]]))
 
     switch(pal,
            pink = {
@@ -689,6 +696,8 @@ plot.DSFM1D <- function(object, which = "all", ask = TRUE, pal = "pink",
 #' Within R Package vars. In: \emph{Journal of Statistical Software 27(4)}.
 #' URL http://www.jstatsoft.org/v27/i04/.
 #'
+#' @export
+#'
 predict.DSFM1D <- function(object, nAhead = 12, p = 1, ...) {
 
   date  <- object$Y[ ,1]
@@ -758,15 +767,17 @@ predict.DSFM1D <- function(object, nAhead = 12, p = 1, ...) {
 
 # Print Function -------------------------------------------------------------- #
 
-print.predict.DSFM1D <- function(object, ...) {
+#' @export
+#'
+print.predict.DSFM1D <- function(x, ...) {
 
   cat("Call:\n")
-  print(object$call)
+  print(x$call)
   cat("\nForecasted Y:\n")
-  print(object$YHatForecastMatrix)
+  print(x$YHatForecastMatrix)
   cat("\nForecasted Z:\n")
-  print(object$ZHatForecast)
-  cat("\nHorizon:", object$nAhead)
+  print(x$ZHatForecast)
+  cat("\nHorizon:", x$nAhead)
 
 }
 
@@ -831,6 +842,8 @@ print.predict.DSFM1D <- function(object, ...) {
 #' Smoothing Methods". In: \emph{Journal of Econometrics 105.1}, pp. 185-223.
 #'
 #' @seealso \code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}}.
+#'
+#' @export
 #'
 simulateDSFM1D <- function(model = "ns", n = 100, x1 = 1:30, L = 3,
                            var = 0.0005, beta = c(0.065, -0.015, 0.05),
@@ -963,6 +976,8 @@ simulateDSFM1D <- function(model = "ns", n = 100, x1 = 1:30, L = 3,
 #'
 #' @seealso \code{\link{summary.DSFM1DData}}, \code{\link{plot.DSFM1DData}}.
 #'
+#' @export
+#'
 dataDSFM1D <- function(y, x1=NULL) {
 
   if (dim(y)[2] == 3) {
@@ -1025,15 +1040,17 @@ dataDSFM1D <- function(y, x1=NULL) {
 
 # Print Function -------------------------------------------------------------- #
 
-print.DSFM1DData <- function(object, ...) {
+#' @export
+#'
+print.DSFM1DData <- function(x, ...) {
 
   cat("Dataset of class DSFM1DData to be used in the DSFM() function.\n\n")
-  cat("Number of observations: ", length(unique(object$Date)), ".\n",
+  cat("Number of observations: ", length(unique(x$Date)), ".\n",
       sep = "")
-  cat("Covariates range: from ", min(object$x1), " to ",
-      max(object$x1), ".", sep = "", "\n")
-  cat("Time range: from ", as.character(min(object$Date)),
-      " to ", as.character(max(object$Date)), sep = "", ".\n")
+  cat("Covariates range: from ", min(x$x1), " to ",
+      max(x$x1), ".", sep = "", "\n")
+  cat("Time range: from ", as.character(min(x$Date)),
+      " to ", as.character(max(x$Date)), sep = "", ".\n")
 }
 
 # Summary Function ------------------------------------------------------------ #
@@ -1043,13 +1060,16 @@ print.DSFM1DData <- function(object, ...) {
 #' \code{summary} method for class \code{"DSFM1DData"}.
 #'
 #' @param object an object of class \code{"DSFM1DData"}.
+#' @param ... further arguments passed to or from other methods.
 #'
 #' @return The function \code{summary.DSFM1DData} returns a summary
 #' statistics of the data set given in \code{object}.
 #'
 #' @seealso \code{\link{dataDSFM1D}}, \code{\link{plot.DSFM1DData}}.
 #'
-summary.DSFM1DData <- function(object) {
+#' @export
+#'
+summary.DSFM1DData <- function(object, ...) {
 
   x1Summary <- data.frame(rbind(matrix(unlist(by(object$y,
                                                  object$x1,
@@ -1079,7 +1099,7 @@ summary.DSFM1DData <- function(object) {
 #' Plots the 3D vizualisation of the data set contained in \code{object} of class
 #' \code{DSFM1DData}.
 #'
-#' @param object an object of class \code{"DSFM1DData"}.
+#' @param x an \code{object} of class \code{"DSFM1DData"}.
 #' @param pal the color palette for the fit plot. To choose between
 #' \code{"pink"},\code{"blue"},\code{"light"},\code{"dark"}.
 #' @param theta angles defining the viewing direction of the fit plot.
@@ -1105,15 +1125,17 @@ summary.DSFM1DData <- function(object) {
 #'
 #' @seealso \code{\link{dataDSFM1D}}, \code{\link{summary.DSFM1DData}}.
 #'
-plot.DSFM1DData <- function(object, pal = "pink", theta = 40, border = NA,
+#' @export
+#'
+plot.DSFM1DData <- function(x, pal = "pink", theta = 40, border = NA,
                             box = T, shade = .2, expand = .5,
                             ticktype = "simple",  ...) {
 
-  I     <- length(unique(object$Date))
-  J     <- length(unique(object$x1))
+  I     <- length(unique(x$Date))
+  J     <- length(unique(x$x1))
   x1    <- seq(1, I) / I
-  x2    <- unique(object$x1)
-  Y     <- matrix(object$y, I, J, byrow = T)
+  x2    <- unique(x$x1)
+  Y     <- matrix(x$y, I, J, byrow = T)
 
   switch(pal,
          pink = {
