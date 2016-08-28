@@ -108,6 +108,11 @@ The implementation of model by Marc Gumowski was based on
 Fengler and al. (2007).
 }
 \references{
+Borak, Szymon, Matthias R. Fengler, and Wolfgang K. Haerdle (2005)."DSFM
+Fitting of Implied Volatility Surfaces". In: \emph{5th International
+Conference on Intelligent Systems Design and Applications (ISDA'05)},
+pp. 526-531. IEEE.
+
 Fengler, Matthias R, Wolfgang K Haerdle, and Enno Mammen (2007).
 "A Semiparametric Factor Model for Implied Volatility Surface Dynamics".
 In: \emph{Journal of Financial Econometrics 5.2}, pp. 189-218.
@@ -115,11 +120,6 @@ In: \emph{Journal of Financial Econometrics 5.2}, pp. 189-218.
 Haerdle, Wolfgang K., and Piotr Majer (2014).
 "Yield Curve Modeling and Forecasting using Semiparametric Factor Dynamics".
 In: \emph{The European Journal of Finance}, pp. 1-21.
-
-Borak, Szymon, Matthias R. Fengler, and Wolfgang K. Haerdle (2005)."DSFM
-Fitting of Implied Volatility Surfaces". In: \emph{5th International
-Conference on Intelligent Systems Design and Applications (ISDA'05)},
-pp. 526-531. IEEE.
 }
 \seealso{
 \code{\link{summary.DSFM2D}} for

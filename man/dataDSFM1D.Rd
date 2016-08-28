@@ -15,7 +15,7 @@ with a proper \code{date} format. The remainings columns are the responses
 }
 \value{
 \code{dataDSFM1D} returns a list, which belongs to the class
-\code{"DSFM1DData"}. The list contains the dates, the responses and
+\code{"DSFM1DData"}. The list contains the dates, the responses, and
 the covariates in three distinct columns.
 
 The generic functions \code{print},\code{summary}, and \code{plot}

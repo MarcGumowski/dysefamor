@@ -12,7 +12,7 @@
 \item{...}{further arguments passed to or from other methods.}
 }
 \value{
-The function \code{summary.DSFM1DData} returns a summary
+The function \code{summary.DSFM1DData} returns summary
 statistics of the data set given in \code{object}.
 }
 \description{

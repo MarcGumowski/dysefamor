@@ -6,8 +6,8 @@
 \alias{dysefamor-package}
 \title{dysefamor: Estimation Algorithm of Dynamic Semiparametric Factor Model}
 \description{
-The dysefamor package provides DSFM fits for one-dimensional data and
-DSFM fits for two-dimensional data.
+The dysefamor package provides DSFM for one-dimensional and
+two-dimensional data.
 }
 \section{Main Function}{
 
