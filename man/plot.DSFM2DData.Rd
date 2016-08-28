@@ -4,8 +4,9 @@
 \alias{plot.DSFM2DData}
 \title{Plot Method for an \code{DSFM2DData} Object}
 \usage{
-plot.DSFM2DData(object, n = 1, pal = "pink", theta = 40, border = NA,
-  box = T, shade = 0.2, expand = 0.5, ticktype = "simple", ...)
+\method{plot}{DSFM2DData}(object, n = 1, pal = "pink", theta = 40,
+  border = NA, box = T, shade = 0.2, expand = 0.5,
+  ticktype = "simple", ...)
 }
 \arguments{
 \item{object}{an object of class \code{"DSFM2DData"}.}

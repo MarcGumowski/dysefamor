@@ -4,9 +4,9 @@
 \alias{plot.DSFM2D}
 \title{Plot Diagnostics for a DSFM2D Object}
 \usage{
-plot.DSFM2D(object, which = "all", n = 1, ask = TRUE, pal = "pink",
-  col = "#016C59", type = "l", theta = 40, border = NA, box = T,
-  shade = 0.2, expand = 0.5, ticktype = "detailed", ...)
+\method{plot}{DSFM2D}(object, which = "all", n = 1, ask = TRUE,
+  pal = "pink", col = "#016C59", type = "l", theta = 40, border = NA,
+  box = T, shade = 0.2, expand = 0.5, ticktype = "detailed", ...)
 }
 \arguments{
 \item{object}{an object of class \code{"DSFM1D"}.}

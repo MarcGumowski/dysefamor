@@ -1,6 +1,6 @@
 Package: dysefamor
 Type: Package
-Title: dysefamor: Estimation Algorithm of Dynamic Semiparametric Factor Model
+Title: Estimation Algorithm of Dynamic Semiparametric Factor Model
 Version: 0.0.0.9000
 Date: 2016-08-18
 Authors@R: person("Marc", "Gumowski", email = "marc.gumowski@gmail.com",

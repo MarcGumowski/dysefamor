@@ -4,7 +4,7 @@
 \alias{plot.DSFM1D}
 \title{Plot Diagnostics for a DSFM1D Object}
 \usage{
-plot.DSFM1D(object, which = "all", ask = TRUE, pal = "pink",
+\method{plot}{DSFM1D}(object, which = "all", ask = TRUE, pal = "pink",
   col = "#016C59", type = "l", theta = 40, border = NA, box = T,
   shade = 0.2, expand = 0.5, ticktype = "detailed", ...)
 }
