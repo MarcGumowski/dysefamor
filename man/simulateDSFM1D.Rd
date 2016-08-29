@@ -17,8 +17,8 @@ and \code{"dsfm"}.}
 
 \item{L}{the number of factors for the DSFM.}
 
-\item{var}{the error \eqn{\varepsilon_{t,j}} of the models. Allows to control the
-noise.}
+\item{var}{the error \eqn{\varepsilon_{t,j}} of the models. Allows to control
+the noise.}
 
 \item{beta}{a vector of dimension (1x3) controlling the starting values of
 the VAR(1) process.}

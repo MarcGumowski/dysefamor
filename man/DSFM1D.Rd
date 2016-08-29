@@ -50,7 +50,8 @@ the value \eqn{\hat{Y}_{t,j}} for each covariates \eqn{X_{t,j}}.}
 \item{\code{mHat}}{the estimated factor functions \eqn{\hat{m}_l}.}
 \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 number of factors.}
-\item{\code{RMSE}}{gives the Root Mean Squared Error, used to compare models.}
+\item{\code{RMSE}}{gives the Root Mean Squared Error,
+used to compare models.}
 \item{\code{Bw}}{gives the bandwidth \eqn{h} used and two selection criteria
  to select the optimal bandwidth.}
 \item{\code{x1}}{the vector of the covariates.}
@@ -118,10 +119,10 @@ The implementation of model by Marc Gumowski was based on
 Fengler and al. (2007).
 }
 \references{
-Borak, Szymon, Matthias R. Fengler, and Wolfgang K. Haerdle (2005)."DSFM
-Fitting of Implied Volatility Surfaces". In: \emph{5th International
-Conference on Intelligent Systems Design and Applications (ISDA'05)},
-pp. 526-531. IEEE.
+Borak, Szymon, Matthias R. Fengler, and Wolfgang K. Haerdle
+(2005). "DSFM Fitting of Implied Volatility Surfaces". In: \emph{5th
+International Conference on Intelligent Systems Design and Applications
+(ISDA'05)}, pp. 526-531. IEEE.
 
 Fengler, Matthias R, Wolfgang K Haerdle, and Enno Mammen (2007).
 "A Semiparametric Factor Model for Implied Volatility Surface Dynamics".
