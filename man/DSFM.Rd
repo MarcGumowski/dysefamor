@@ -103,8 +103,9 @@ proper definition of each criterion can be found in references.
 # Prepare the data --------------------------------------------------------- #
 # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 data(canadianYieldCurves)
-maturity <- c(1/4,1/2,3/4,1:10,20,30)
-dsfmData <- dataDSFM1D(canadianYieldCurves,maturity)
+maturity <- c(1/4, 1/2, 3/4, 1:10, 20, 30)
+dsfmData <- dataDSFM1D(canadianYieldCurves[1:100, ], maturity)
+dsfmData
 plot(dsfmData)
 
 # Set the parameters ------------------------------------------------------- #
@@ -124,12 +125,12 @@ predict(dsfmFit, nAhead = horizon)
 
 ## Two-Dimensional Data #################################################### #
 
-#' # Prepare the data --------------------------------------------------------- #
+# Prepare the data --------------------------------------------------------- #
 simulatedData <- simulateDSFM2D()
 dsfmData      <- simulatedData$dataSim
 
 # Set the parameters ------------------------------------------------------- #
-h        <- c(0.05,0.05)
+h        <- c(0.05, 0.05)
 L        <- 3
 
 # Fit the model ------------------------------------------------------------ #
@@ -147,8 +148,8 @@ The implementation of model by Marc Gumowski was based on
 Fengler and al. (2007).
 }
 \references{
-Borak, Szymon, Matthias R. Fengler, and Wolfgang K. Haerdle (2005)."DSFM
-Fitting of Implied Volatility Surfaces". In: \emph{5th International
+Borak, Szymon, Matthias R. Fengler, and Wolfgang K. Haerdle (2005).
+"DSFM Fitting of Implied Volatility Surfaces". In: \emph{5th International
 Conference on Intelligent Systems Design and Applications (ISDA'05)},
 pp. 526-531. IEEE.
 

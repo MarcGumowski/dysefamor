@@ -88,9 +88,10 @@ proper definition of each criterion can be found in references.
 # Prepare the data --------------------------------------------------------- #
 simulatedData <- simulateDSFM2D()
 dsfmData      <- simulatedData$dataSim
+dsfmData
 
 # Set the parameters ------------------------------------------------------- #
-h        <- c(0.05,0.05)
+h        <- c(0.05, 0.05)
 L        <- 3
 
 # Fit the model ------------------------------------------------------------ #

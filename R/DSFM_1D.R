@@ -117,8 +117,8 @@
 #' # Prepare the data --------------------------------------------------------- #
 #' # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 #' data(canadianYieldCurves)
-#' maturity <- c(1/4,1/2,3/4,1:10,20,30)
-#' dsfmData <- dataDSFM1D(canadianYieldCurves,maturity)
+#' maturity <- c(1/4, 1/2, 3/4, 1:10, 20, 30)
+#' dsfmData <- dataDSFM1D(canadianYieldCurves[1:100, ], maturity)
 #' dsfmData
 #' plot(dsfmData)
 #'
@@ -801,8 +801,9 @@ print.predict.DSFM1D <- function(x, ...) {
 #' This function simulates responses for one-dimensional factor models.
 #'
 #' Two different way of generating data are available: using an Extended
-#' Nelson-Siegel model \code{"ns"} with a predefined VAR(1) process or a Dynamic
-#' Semiparametric Factor Model \code{"dsfm"} with predefined factors functions.
+#' Nelson-Siegel model following Bliss (1997) \code{"ns"} with a predefined
+#' VAR(1) process, or a Dynamic Semiparametric Factor Model \code{"dsfm"}
+#' with predefined factors functions.
 #' This function is used for example purpose, only few parameters are available
 #' to control the simulation.
 #'
@@ -840,6 +841,9 @@ print.predict.DSFM1D <- function(x, ...) {
 #'
 #' @references Linton, Oliver et al. (2001). "Yield Curve Estimation by Kernel
 #' Smoothing Methods". In: \emph{Journal of Econometrics 105.1}, pp. 185-223.
+#'
+#' Bliss, Robert R.(1997). "Testing Term Structure Estimation Methods".
+#' In: \emph{Advances in Futures and Options Research 9}, pp. 197-231.
 #'
 #' @seealso \code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}}.
 #'

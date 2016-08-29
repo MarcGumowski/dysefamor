@@ -46,8 +46,9 @@ This function simulates responses for one-dimensional factor models.
 }
 \details{
 Two different way of generating data are available: using an Extended
-Nelson-Siegel model \code{"ns"} with a predefined VAR(1) process or a Dynamic
-Semiparametric Factor Model \code{"dsfm"} with predefined factors functions.
+Nelson-Siegel model following Bliss (1997) \code{"ns"} with a predefined
+VAR(1) process, or a Dynamic Semiparametric Factor Model \code{"dsfm"}
+with predefined factors functions.
 This function is used for example purpose, only few parameters are available
 to control the simulation.
 
@@ -60,6 +61,9 @@ process and the factors functions are predefined to be orthogonals.
 \references{
 Linton, Oliver et al. (2001). "Yield Curve Estimation by Kernel
 Smoothing Methods". In: \emph{Journal of Econometrics 105.1}, pp. 185-223.
+
+Bliss, Robert R.(1997). "Testing Term Structure Estimation Methods".
+In: \emph{Advances in Futures and Options Research 9}, pp. 197-231.
 }
 \seealso{
 \code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}}.

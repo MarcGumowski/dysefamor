@@ -94,8 +94,8 @@ proper definition of each criterion can be found in references.
 # Prepare the data --------------------------------------------------------- #
 # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 data(canadianYieldCurves)
-maturity <- c(1/4,1/2,3/4,1:10,20,30)
-dsfmData <- dataDSFM1D(canadianYieldCurves,maturity)
+maturity <- c(1/4, 1/2, 3/4, 1:10, 20, 30)
+dsfmData <- dataDSFM1D(canadianYieldCurves[1:100, ], maturity)
 dsfmData
 plot(dsfmData)
 
