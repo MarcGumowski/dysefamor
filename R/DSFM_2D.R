@@ -623,7 +623,7 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
     facetCol <- cut(zFacet, 200)
     persp(x1, x2, Y, xlab = names(x$data)[3], ylab = names(x$data)[4],
           zlab = names(x$data)[2], col = color[facetCol],
-          main = paste("Y -", date[n]), theta = theta, border = border,
+          main = paste("Residuals -", date[n]), theta = theta, border = border,
           box = box, shade = shade, expand = expand, ticktype = ticktype, ...)
 
   }
