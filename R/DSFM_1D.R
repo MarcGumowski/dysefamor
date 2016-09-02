@@ -75,8 +75,9 @@
 #' number of factors.}
 #' \item{\code{RMSE}}{gives the Root Mean Squared Error,
 #' used to compare models.}
-#' \item{\code{Bw}}{gives the bandwidth \eqn{h} used and two selection criteria
+#' \item{\code{AIC}}{gives the bandwidth \eqn{h} used and two selection criteria
 #'  to select the optimal bandwidth.}
+#' \item{\code{Bandwidth}}{the vector of bandwidths used at each kernel point.}
 #' \item{\code{x1}}{the vector of the covariates.}
 #' \item{\code{Density}}{the kernel density estimation performed.}
 #' \item{\code{Convergence}}{the value of the algorithm stopping criterion at
@@ -399,14 +400,17 @@ DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
   EV              <- data.frame(EV)
   rownames(EV)    <- NULL
   names(EV)       <- paste0("EV(L = ", L, ")")
-  Bw              <- data.frame(t(c(unique(h), AIC2, SC1)))
-  names(Bw)       <- c(paste0("h", 1:length(unique(h))), "wAIC_2", "wSC_1")
+  AIC             <- data.frame(t(c(unique(h), AIC2, SC1)))
+  names(AIC)      <- c(paste0("h", 1:length(unique(h))), "wAIC_2", "wSC_1")
+  h               <- data.frame(h)
+  names(h)        <- "h"
 
   Time2 <- Sys.time() - Time1
 
   model <- list(Data = data, Y = y, YHat = YHat, ZHat = ZHat, mHat = mHat,
-                EV = EV, RMSE = RMSE, Bw = Bw, x1 = namesX1, Density = pHat,
-                Convergence = plotStopCriterion, Iterations = it, Time = Time2)
+                Bandwidth = h, EV = EV, RMSE = RMSE, AIC = AIC,
+                x1 = namesX1, Density = pHat, Convergence = plotStopCriterion,
+                Iterations = it, Time = Time2)
   model$call   <- match.call()
   class(model) <- "DSFM1D"
 
@@ -443,8 +447,8 @@ print.DSFM1D <- function(x, ...) {
   print(x$EV, row.names = F)
   cat("\nRoot Mean Squared Error:\n")
   print(x$RMSE, row.names = F)
-  cat("\nBandwidth:\n")
-  print(x$Bw, row.names = F)
+  cat("\nBandwidth Selection Criteria:\n")
+  print(x$AIC, row.names = F)
   cat("\nCovavriates:",x$x1,"\n")
   cat("\nIterations:",x$Iterations,"\n")
   cat("\n")
@@ -506,7 +510,7 @@ summary.DSFM1D <- function(object, ...) {
   cat("\nRoot Mean Squared Error:\n")
   print(object$RMSE, row.names = F)
 
-  if (is.na(object$Bw$wAIC_2) == F) {
+  if (is.na(object$AIC$wAIC_2) == F) {
     cat("\nBandwidth selection criteria:\n")
     print(object$Bw, row.names = F)
   }

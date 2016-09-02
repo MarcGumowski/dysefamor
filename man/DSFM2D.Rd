@@ -46,7 +46,7 @@ components:
 \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 number of factors.}
 \item{\code{RMSE}}{gives the Root Mean Squared Error, used to compare models.}
-\item{\code{Bw}}{gives the bandwidth \eqn{h} used and two selection criteria
+\item{\code{AIC}}{gives the bandwidth \eqn{h} used and two selection criteria
  to select the optimal bandwidth.}
 \item{\code{Density}}{the kernel density estimation performed.}
 \item{\code{Convergence}}{the value of the algorithm stopping criterion at

@@ -69,7 +69,7 @@
 #' \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 #' number of factors.}
 #' \item{\code{RMSE}}{gives the Root Mean Squared Error, used to compare models.}
-#' \item{\code{Bw}}{gives the bandwidth \eqn{h} used and two selection criteria
+#' \item{\code{AIC}}{gives the bandwidth \eqn{h} used and two selection criteria
 #'  to select the optimal bandwidth.}
 #' \item{\code{Density}}{the kernel density estimation performed.}
 #' \item{\code{Convergence}}{the value of the algorithm stopping criterion at
@@ -370,13 +370,15 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
   EV             <- data.frame(EV)
   names(EV)      <- paste0("EV(L = ", L, ")")
   names(RMSE)    <- "RMSE"
-  Bw             <- data.frame(t(c(unique(h), AIC2, SC1)))
-  names(Bw)      <- c("h1", "h2", "wAIC_2", "wSC_1")
+  AIC             <- data.frame(t(c(unique(h), AIC2, SC1)))
+  names(AIC)      <- c("h1", "h2", "wAIC_2", "wSC_1")
+  h               <- data.frame(h)
+  names(h)        <- c("h1","h2")
 
   Time2 <- Sys.time() - Time1 # Calculate time difference
 
   model <- list(Data = data, YHat = YHat, ZHat = ZHat, mHat = mHat, EV = EV,
-                RMSE = RMSE, Bw = Bw, Density = pHat,
+                RMSE = RMSE, AIC = AIC, Bandwidth = h, Density = pHat,
                 Convergence = plotStopCriterion, Iterations = it, Time = Time2)
   model$call   <- match.call()
   class(model) <- "DSFM2D"
@@ -412,8 +414,8 @@ print.DSFM2D <- function(x, ...){
   print(x$EV, row.names = F)
   cat("\nRoot Mean Squared Error:\n")
   print(x$RMSE, row.names = F)
-  cat("\nBandwidth:\n")
-  print(x$Bw, row.names = F)
+  cat("\nBandwidth Selection Criteria:\n")
+  print(x$AIC, row.names = F)
   cat("\nIterations:",x$Iterations,"\n")
   cat("\n")
   print(x$Time)
@@ -471,7 +473,7 @@ summary.DSFM2D <- function(object, ...) {
   cat("\nRoot Mean Squared Error:\n")
   print(object$RMSE, row.names = F)
 
-  if (is.na(object$Bw$wAIC_2) == F) {
+  if (is.na(object$AIC$wAIC_2) == F) {
     cat("\nBandwidth selection criteria:\n")
     print(object$Bw, row.names = F)
   }

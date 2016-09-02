@@ -55,8 +55,9 @@ the value \eqn{\hat{Y}_{t,j}} for each covariates \eqn{X_{t,j}}.}
 number of factors.}
 \item{\code{RMSE}}{gives the Root Mean Squared Error, used to compare the
 goodness-of-fit between models.}
-\item{\code{Bw}}{gives the bandwidth \eqn{h} used and two selection criteria to
+\item{\code{AIC}}{gives the bandwidth \eqn{h} used and two selection criteria to
 select the optimal bandwidth.}
+\item{\code{Bandwidth}}{the vector of bandwidths used at each kernel point.}
 \item{\code{x1}}{the vector of the covariates.}
 \item{\code{Density}}{the kernel density estimation performed.}
 \item{\code{Convergence}}{the value of the algorithm stopping criterion at
@@ -64,8 +65,9 @@ each loop.}
 \item{\code{Time}}{an indicator of the time taken by the function to perform
 the fit.}
 
-Object of class \code{"DSFM2D"} provides the same outputs except that the
-\code{Y} and \code{YHat} are kept in the specific format used by the function.
+Object of class \code{"DSFM2D"} provides more or less the same outputs
+except that the \code{Y} and \code{YHat} are kept in the specific
+format used by the function.
 }
 \description{
 \code{DSFM} performs a model estimation using Dynamic Semiparametric Factor
