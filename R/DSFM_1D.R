@@ -62,7 +62,7 @@
 #'
 #' An object of class \code{"DSFM1D"} is a list containing the following
 #' components:
-#' \item{\code{Data}}{the input data.}
+#' \item{\code{data}}{the input data.}
 #' \item{\code{Y}}{the input data in a more usual format, i.e. a matrix with a
 #' time indicator as first row and the following rows being the value
 #' \eqn{Y_{t,j}} for each covariates \eqn{X_{t,j}}.}
@@ -71,18 +71,19 @@
 #' the value \eqn{\hat{Y}_{t,j}} for each covariates \eqn{X_{t,j}}.}
 #' \item{\code{ZHat}}{the estimated factor loadings \eqn{\hat{Z}_{t,j}}.}
 #' \item{\code{mHat}}{the estimated factor functions \eqn{\hat{m}_l}.}
+#' \item{\code{residuals}}{the error terms.}
 #' \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 #' number of factors.}
 #' \item{\code{RMSE}}{gives the Root Mean Squared Error,
 #' used to compare models.}
 #' \item{\code{AIC}}{gives the bandwidth \eqn{h} used and two selection criteria
 #'  to select the optimal bandwidth.}
-#' \item{\code{Bandwidth}}{the vector of bandwidths used at each kernel point.}
+#' \item{\code{bandwidth}}{the vector of bandwidths used at each kernel point.}
 #' \item{\code{x1}}{the vector of the covariates.}
-#' \item{\code{Density}}{the kernel density estimation performed.}
-#' \item{\code{Convergence}}{the value of the algorithm stopping criterion at
+#' \item{\code{density}}{the kernel density estimation performed.}
+#' \item{\code{convergence}}{the value of the algorithm stopping criterion at
 #' each loop.}
-#' \item{\code{Time}}{an indicator of the time taken by the function to perform
+#' \item{\code{time}}{an indicator of the time taken by the function to perform
 #' the fit.}
 #'
 #' @author The implementation of model by Marc Gumowski was based on
@@ -314,7 +315,8 @@ DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
     YTHat <- Reduce("+",YTHat)
     YHat[t, ] <- YTHat
   }
-  numerator <- (y - YHat)^2
+  residuals <- y - YHat
+  numerator <- (residuals)^2
   numerator <- sum(numerator)
   denominator <- (y - YBar)^2
   denominator <- sum(denominator)
@@ -388,29 +390,31 @@ DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
   # Outputs ------------------------------------------------------------------- #
 
   # Create data frames as outputs
-  ZHat            <- data.frame(date, ts(ZHat))
-  names(ZHat)     <- c("Date", paste0("Z_t", 0:L, ".hat"))
-  mHat            <- data.frame(u * max(unique(data$x1)), mHat)
-  names(mHat)     <- c("u1", paste0("m_", 0:L, ".hat"))
-  y               <- as.matrix(y, I, J)
-  y               <- data.frame(date, y)
-  names(y)        <- c("Date", namesX1)
-  YHat            <- data.frame(date, YHat)
-  names(YHat)     <- names(y)
-  EV              <- data.frame(EV)
-  rownames(EV)    <- NULL
-  names(EV)       <- paste0("EV(L = ", L, ")")
-  AIC             <- data.frame(t(c(unique(h), AIC2, SC1)))
-  names(AIC)      <- c(paste0("h", 1:length(unique(h))), "wAIC_2", "wSC_1")
-  h               <- data.frame(h)
-  names(h)        <- "h"
+  ZHat             <- data.frame(date, ts(ZHat))
+  names(ZHat)      <- c("Date", paste0("Z_t", 0:L, ".hat"))
+  mHat             <- data.frame(u * max(unique(data$x1)), mHat)
+  names(mHat)      <- c("u1", paste0("m_", 0:L, ".hat"))
+  y                <- as.matrix(y, I, J)
+  y                <- data.frame(date, y)
+  names(y)         <- c("Date", namesX1)
+  YHat             <- data.frame(date, YHat)
+  names(YHat)      <- names(y)
+  EV               <- data.frame(EV)
+  rownames(EV)     <- NULL
+  names(EV)        <- paste0("EV(L = ", L, ")")
+  AIC              <- data.frame(t(c(unique(h), AIC2, SC1)))
+  names(AIC)       <- c(paste0("h", 1:length(unique(h))), "wAIC_2", "wSC_1")
+  h                <- data.frame(h)
+  names(h)         <- "h"
+  residuals        <- data.frame(date, residuals)
+  names(residuals) <- c("Date", namesX1)
 
   Time2 <- Sys.time() - Time1
 
-  model <- list(Data = data, Y = y, YHat = YHat, ZHat = ZHat, mHat = mHat,
-                Bandwidth = h, EV = EV, RMSE = RMSE, AIC = AIC,
-                x1 = namesX1, Density = pHat, Convergence = plotStopCriterion,
-                Iterations = it, Time = Time2)
+  model <- list(data = data, Y = y, YHat = YHat, ZHat = ZHat, mHat = mHat,
+                residuals = residuals, bandwidth = h, EV = EV, RMSE = RMSE,
+                AIC = AIC, x1 = namesX1, density = pHat,
+                convergence = plotStopCriterion, iterations = it, time = Time2)
   model$call   <- match.call()
   class(model) <- "DSFM1D"
 
@@ -472,7 +476,7 @@ print.DSFM1D <- function(x, ...) {
 #' number of factors.}
 #' \item{\code{RMSE}}{the Root Mean Squared Error, used to compare the goodness-
 #' of-fit between models.}
-#' \item{\code{Bw}}{The bandwidth and its selection criteria.}
+#' \item{\code{AIC}}{The bandwidth and its selection criteria.}
 #'
 #' @seealso \code{\link{DSFM1DData}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
 #' \code{\link{plot.DSFM1D}}, \code{\link{predict.DSFM1D}}.
@@ -512,7 +516,7 @@ summary.DSFM1D <- function(object, ...) {
 
   if (is.na(object$AIC$wAIC_2) == F) {
     cat("\nBandwidth selection criteria:\n")
-    print(object$Bw, row.names = F)
+    print(object$AIC, row.names = F)
   }
 }
 
@@ -579,10 +583,10 @@ plot.DSFM1D <- function(x, which = "all", ask = TRUE, pal = "pink",
   }
   # Convergence Plot
   if ("convergence" %in% which) {
-    N <- length(x$Convergence)
+    N <- length(x$convergence)
     xAxis <- 1:N
     layout(matrix(1))
-    plot(xAxis[(N - N*0.95):N], x$Convergence[(N - N * 0.95):N],
+    plot(xAxis[(N - N*0.95):N], x$convergence[(N - N * 0.95):N],
          main = "Convergence of the algorithm",
          ylab = "Stopping Criterion", xlab = "Iteration",
          col = col, type = type, ...)
@@ -989,9 +993,13 @@ simulateDSFM1D <- function(model = "ns", n = 100, x1 = 1:30, L = 3,
 #'
 DSFM1DData <- function(y, x1=NULL) {
 
-  if (is.null(attr(y, "class"))) {
-
-    if (dim(y)[2] == 3) {
+  if (class(y) == "xts") {
+    x1          <- data.frame(x1)
+    date        <- data.frame(as.Date(time(y) %x% rep(1, dim(x1)[1]),
+                                      origin = "1970-01-01"))
+    y           <- data.frame(c(t(y)))
+    data        <- data.frame(date, y, x1)
+  } else if (dim(y)[2] == 3) {
       data        <- data.frame(y)
       data[,1]    <- as.Date(data[,1])
     } else {
@@ -1000,7 +1008,6 @@ DSFM1DData <- function(y, x1=NULL) {
       if (inherits(date, "Date")) {
         date <- data.frame(as.Date(y[ ,1] %x% rep(1, dim(x1)[1]),
                                    origin = "1970-01-01"))
-
         # If Dates is not as format Date. Tries to deduce the correct dates
       } else {
         format <- gsub("[[:punct:]]", "-", y[ ,1])
@@ -1035,7 +1042,6 @@ DSFM1DData <- function(y, x1=NULL) {
             }
           }
         }
-
         date      <- paste(format$years, format$months, format$days, sep = "-")
         date      <- c(t(matrix(rep(date, dim(x1)[1]), ncol = dim(x1)[1])))
         date      <- as.Date(date)
@@ -1043,16 +1049,6 @@ DSFM1DData <- function(y, x1=NULL) {
       y           <- data.frame(c(t(y[ ,2:length(y)])))
       data        <- data.frame(date, y, x1)
     }
-
-  } else if (is(y, "xts")) {
-    x1          <- data.frame(x1)
-    date        <- data.frame(as.Date(index(y) %x% rep(1, dim(x1)[1]),
-                                      origin = "1970-01-01"))
-    y           <- data.frame(c(t(y)))
-    data        <- data.frame(date, y, x1)
-  } else {
-    stop("Invalid Object y")
-  }
 
   names(data)   <- c("Date", "y", "x1")
   class(data)   <- "DSFM1DData"

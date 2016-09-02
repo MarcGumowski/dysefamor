@@ -51,6 +51,7 @@ i.e. a matrix with a time indicator as first row and the following rows being
 the value \eqn{\hat{Y}_{t,j}} for each covariates \eqn{X_{t,j}}.}
 \item{\code{ZHat}}{the estimated factor loadings \eqn{\hat{Z}_{t,j}}.}
 \item{\code{mHat}}{the estimated factor functions \eqn{\hat{m}_l}.}
+\item{\code{residuals}}{the error terms.}
 \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 number of factors.}
 \item{\code{RMSE}}{gives the Root Mean Squared Error, used to compare the
@@ -66,8 +67,8 @@ each loop.}
 the fit.}
 
 Object of class \code{"DSFM2D"} provides more or less the same outputs
-except that the \code{Y} and \code{YHat} are kept in the specific
-format used by the function.
+except that the \code{Y}, \code{YHat} and \code{residuals} are kept in the
+specific \code{"DSFM2DData"} format.
 }
 \description{
 \code{DSFM} performs a model estimation using Dynamic Semiparametric Factor

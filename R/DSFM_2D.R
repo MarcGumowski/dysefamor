@@ -62,19 +62,20 @@
 #'
 #' An object of class \code{"DSFM2D"} is a list containing the following
 #' components:
-#' \item{\code{Data}}{the input data.}
+#' \item{\code{data}}{the input data.}
 #' \item{\code{YHat}}{the estimated \eqn{\hat{Y}_{t,j}}.}
 #' \item{\code{ZHat}}{the estimated factor loadings \eqn{\hat{Z}_{t,j}}.}
 #' \item{\code{mHat}}{the estimated factor functions \eqn{\hat{m}_l}.}
+#' \item{\code{residuals}}{the error terms.}
 #' \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 #' number of factors.}
 #' \item{\code{RMSE}}{gives the Root Mean Squared Error, used to compare models.}
 #' \item{\code{AIC}}{gives the bandwidth \eqn{h} used and two selection criteria
 #'  to select the optimal bandwidth.}
-#' \item{\code{Density}}{the kernel density estimation performed.}
-#' \item{\code{Convergence}}{the value of the algorithm stopping criterion at
+#' \item{\code{density}}{the kernel density estimation performed.}
+#' \item{\code{convergence}}{the value of the algorithm stopping criterion at
 #' each loop.}
-#' \item{\code{Time}}{an indicator of the time taken by the function to perform
+#' \item{\code{time}}{an indicator of the time taken by the function to perform
 #' the fit.}
 #'
 #' @author The implementation of model by Marc Gumowski was based on
@@ -325,7 +326,8 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
   YHatRMSE  <- YHat
   YHat  <- unlist(YHat)
 
-  numerator <- (Y - YHat)^2
+  residuals <- Y - YHat
+  numerator <- (residuals)^2
   numerator <- sum(numerator)
   denominator <- (Y - YBar)^2
   denominator <- sum(denominator)
@@ -361,25 +363,28 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
   # Outputs ------------------------------------------------------------------- #
 
   # Create data frames as outputs
-  ZHat           <- data.frame(date, ZHat)
-  names(ZHat)    <- c("Date", paste0("Z_t", 0:L, ".hat"))
-  mHat           <- data.frame(u * c(max(data$x1),max(data$x2)), mHat)
-  names(mHat)    <- c("u1", "u2", paste0("m_", 0:L, ".hat"))
-  YHat           <- data.frame(data$Date, YHat, data$x1, data$x2)
-  names(YHat)    <- c("Date", "y.hat", "x1", "x2")
-  EV             <- data.frame(EV)
-  names(EV)      <- paste0("EV(L = ", L, ")")
-  names(RMSE)    <- "RMSE"
-  AIC             <- data.frame(t(c(unique(h), AIC2, SC1)))
-  names(AIC)      <- c("h1", "h2", "wAIC_2", "wSC_1")
-  h               <- data.frame(h)
-  names(h)        <- c("h1","h2")
+  ZHat             <- data.frame(date, ZHat)
+  names(ZHat)      <- c("Date", paste0("Z_t", 0:L, ".hat"))
+  mHat             <- data.frame(u * c(max(data$x1),max(data$x2)), mHat)
+  names(mHat)      <- c("u1", "u2", paste0("m_", 0:L, ".hat"))
+  YHat             <- data.frame(data$Date, YHat, data$x1, data$x2)
+  names(YHat)      <- c("Date", "y.hat", "x1", "x2")
+  EV               <- data.frame(EV)
+  names(EV)        <- paste0("EV(L = ", L, ")")
+  names(RMSE)      <- "RMSE"
+  AIC              <- data.frame(t(c(unique(h), AIC2, SC1)))
+  names(AIC)       <- c("h1", "h2", "wAIC_2", "wSC_1")
+  h                <- data.frame(h)
+  names(h)         <- c("h1","h2")
+  residuals        <- data.frame(date, residuals, data$x1, data$x2)
+  names(residuals) <- c("Date", "residuals", "x1", "x2")
 
   Time2 <- Sys.time() - Time1 # Calculate time difference
 
-  model <- list(Data = data, YHat = YHat, ZHat = ZHat, mHat = mHat, EV = EV,
-                RMSE = RMSE, AIC = AIC, Bandwidth = h, Density = pHat,
-                Convergence = plotStopCriterion, Iterations = it, Time = Time2)
+  model <- list(data = data, YHat = YHat, ZHat = ZHat, mHat = mHat,
+                residuals = residuals, EV = EV, RMSE = RMSE, AIC = AIC,
+                bandwidth = h, density = pHat,
+                convergence = plotStopCriterion, iterations = it, time = Time2)
   model$call   <- match.call()
   class(model) <- "DSFM2D"
 
@@ -416,9 +421,9 @@ print.DSFM2D <- function(x, ...){
   print(x$RMSE, row.names = F)
   cat("\nBandwidth Selection Criteria:\n")
   print(x$AIC, row.names = F)
-  cat("\nIterations:",x$Iterations,"\n")
+  cat("\nIterations:",x$iterations,"\n")
   cat("\n")
-  print(x$Time)
+  print(x$time)
 }
 
 # Summary Function ------------------------------------------------------------ #
@@ -438,7 +443,7 @@ print.DSFM2D <- function(x, ...){
 #' number of factors.}
 #' \item{\code{RMSE}}{the Root Mean Squared Error, used to compare the goodness-
 #' of-fit between models.}
-#' \item{\code{Bw}}{The bandwidth and its selection criteria.}
+#' \item{\code{AIC}}{The bandwidth and its selection criteria.}
 #'
 #' @seealso \code{\link{DSFM2DData}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
 #' \code{\link{plot.DSFM2D}}, \code{\link{predict.DSFM2D}}.
@@ -475,7 +480,7 @@ summary.DSFM2D <- function(object, ...) {
 
   if (is.na(object$AIC$wAIC_2) == F) {
     cat("\nBandwidth selection criteria:\n")
-    print(object$Bw, row.names = F)
+    print(object$AIC, row.names = F)
   }
 }
 
@@ -530,7 +535,7 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
                         box = T, shade = .2, expand = .5, ticktype = "detailed",
                         ...) {
 
-  date  <- unique(x$Data$Date)
+  date  <- unique(x$data$Date)
   L     <- dim(x$ZHat)[2] - 2
   L0    <- L + 1
   u1    <- unique(x$mHat[ ,1])
@@ -545,9 +550,9 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
   # Convergence Plot
   if ("convergence" %in% which) {
     layout(matrix(1))
-    N <- length(x$Convergence)
+    N <- length(x$convergence)
     xAxis <- 1:N
-    plot(xAxis[(N - N * 0.95):N], x$Convergence[(N - N * 0.95):N],
+    plot(xAxis[(N - N * 0.95):N], x$convergence[(N - N * 0.95):N],
          main = "Convergence of the algorithm",
          ylab = "Stopping Criterion", xlab = "Iteration",
          col = col, type = type, ...)
@@ -581,10 +586,10 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
   }
   if ("fit" %in% which) {
 
-    x1    <- unique(x$Data$x1[which(x$Data$Date == date[n])])
-    x2    <- unique(x$Data$x2[which(x$Data$Date == date[n])])
+    x1    <- unique(x$data$x1[which(x$data$Date == date[n])])
+    x2    <- unique(x$data$x2[which(x$data$Date == date[n])])
     J     <- length(x1) * length(x2)
-    Y     <- matrix(x$Data$y[which(x$Data$Date == date[n])],
+    Y     <- matrix(x$data$y[which(x$data$Date == date[n])],
                     length(x1), length(x2), byrow = T) # Get the y
     YHat  <- matrix(x$YHat[which(x$YHat[ ,1] == date[n]), 2],
                     length(x1), length(x2), byrow = T)
@@ -616,8 +621,8 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
     ncz <- ncol(Y)
     zFacet <- (Y[-1, -1] + Y[-1, -ncz] + Y[-nrz, -1] + Y[-nrz, -ncz]) / 4
     facetCol <- cut(zFacet, 200)
-    persp(x1, x2, Y, xlab = names(x$Data)[3], ylab = names(x$Data)[4],
-          zlab = names(x$Data)[2], col = color[facetCol],
+    persp(x1, x2, Y, xlab = names(x$data)[3], ylab = names(x$data)[4],
+          zlab = names(x$data)[2], col = color[facetCol],
           main = paste("Y -", date[n]), theta = theta, border = border,
           box = box, shade = shade, expand = expand, ticktype = ticktype, ...)
 
@@ -626,8 +631,8 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
     zFacet <- (YHat[-1, -1] + YHat[-1, -ncz] + YHat[-nrz, -1] +
                  YHat[-nrz, -ncz]) / 4
     facetCol <- cut(zFacet, 200)
-    persp(x1, x2, YHat, xlab = names(x$Data)[3],
-          ylab = names(x$Data)[4], zlab = names(x$Data)[2],
+    persp(x1, x2, YHat, xlab = names(x$data)[3],
+          ylab = names(x$data)[4], zlab = names(x$data)[2],
           col = color[facetCol],
           main = bquote(hat(Y) ~"-"~.(as.character(date)[n])), theta = theta,
           border = border, box = box, shade = shade, expand = expand,
@@ -687,7 +692,7 @@ predict.DSFM2D <- function(object, nAhead = 12,
                            x1Forecast = unique(object$mHat[ ,1]),
                            x2Forecast = unique(object$mHat[ ,2]), p = 1, ...) {
 
-  date  <- unique(object$Data$Date)
+  date  <- unique(object$data$Date)
   if (date[2] - date[1] <= 1) {
     timeDiff <- "day"
   }else if (date[2] - date[1] == 7) {

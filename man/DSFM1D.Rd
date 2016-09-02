@@ -39,7 +39,7 @@ The generic functions \code{print}, \code{summary}, \code{plot} and
 
 An object of class \code{"DSFM1D"} is a list containing the following
 components:
-\item{\code{Data}}{the input data.}
+\item{\code{data}}{the input data.}
 \item{\code{Y}}{the input data in a more usual format, i.e. a matrix with a
 time indicator as first row and the following rows being the value
 \eqn{Y_{t,j}} for each covariates \eqn{X_{t,j}}.}
@@ -48,18 +48,19 @@ i.e. a matrix with a time indicator as first row and the following rows being
 the value \eqn{\hat{Y}_{t,j}} for each covariates \eqn{X_{t,j}}.}
 \item{\code{ZHat}}{the estimated factor loadings \eqn{\hat{Z}_{t,j}}.}
 \item{\code{mHat}}{the estimated factor functions \eqn{\hat{m}_l}.}
+\item{\code{residuals}}{the error terms.}
 \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 number of factors.}
 \item{\code{RMSE}}{gives the Root Mean Squared Error,
 used to compare models.}
 \item{\code{AIC}}{gives the bandwidth \eqn{h} used and two selection criteria
  to select the optimal bandwidth.}
-\item{\code{Bandwidth}}{the vector of bandwidths used at each kernel point.}
+\item{\code{bandwidth}}{the vector of bandwidths used at each kernel point.}
 \item{\code{x1}}{the vector of the covariates.}
-\item{\code{Density}}{the kernel density estimation performed.}
-\item{\code{Convergence}}{the value of the algorithm stopping criterion at
+\item{\code{density}}{the kernel density estimation performed.}
+\item{\code{convergence}}{the value of the algorithm stopping criterion at
 each loop.}
-\item{\code{Time}}{an indicator of the time taken by the function to perform
+\item{\code{time}}{an indicator of the time taken by the function to perform
 the fit.}
 }
 \description{

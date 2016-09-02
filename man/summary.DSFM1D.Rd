@@ -20,7 +20,7 @@ statistics of the fitted DSFM given in \code{object}, using the components
 number of factors.}
 \item{\code{RMSE}}{the Root Mean Squared Error, used to compare the goodness-
 of-fit between models.}
-\item{\code{Bw}}{The bandwidth and its selection criteria.}
+\item{\code{AIC}}{The bandwidth and its selection criteria.}
 }
 \description{
 \code{summary} method for class \code{"DSFM1D"}.

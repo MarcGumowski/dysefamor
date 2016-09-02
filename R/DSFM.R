@@ -79,6 +79,7 @@
 #' the value \eqn{\hat{Y}_{t,j}} for each covariates \eqn{X_{t,j}}.}
 #' \item{\code{ZHat}}{the estimated factor loadings \eqn{\hat{Z}_{t,j}}.}
 #' \item{\code{mHat}}{the estimated factor functions \eqn{\hat{m}_l}.}
+#' \item{\code{residuals}}{the error terms.}
 #' \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 #' number of factors.}
 #' \item{\code{RMSE}}{gives the Root Mean Squared Error, used to compare the
@@ -94,8 +95,8 @@
 #' the fit.}
 #'
 #' Object of class \code{"DSFM2D"} provides more or less the same outputs
-#' except that the \code{Y} and \code{YHat} are kept in the specific
-#' format used by the function.
+#' except that the \code{Y}, \code{YHat} and \code{residuals} are kept in the
+#' specific \code{"DSFM2DData"} format.
 #'
 #' @author The implementation of model by Marc Gumowski was based on
 #' Fengler and al. (2007).
@@ -129,8 +130,9 @@
 #'
 #' @importFrom grDevices colorRampPalette
 #' @importFrom graphics axis.Date layout par persp plot
-#' @importFrom stats approx arima.sim rnorm sd ts
+#' @importFrom stats approx arima.sim rnorm sd ts time
 #' @importFrom utils read.table tail
+
 #'
 #' @examples
 #'

@@ -39,19 +39,20 @@ The generic functions \code{print},\code{summary}, \code{plot} and
 
 An object of class \code{"DSFM2D"} is a list containing the following
 components:
-\item{\code{Data}}{the input data.}
+\item{\code{data}}{the input data.}
 \item{\code{YHat}}{the estimated \eqn{\hat{Y}_{t,j}}.}
 \item{\code{ZHat}}{the estimated factor loadings \eqn{\hat{Z}_{t,j}}.}
 \item{\code{mHat}}{the estimated factor functions \eqn{\hat{m}_l}.}
+\item{\code{residuals}}{the error terms.}
 \item{\code{EV}}{gives the Explained Variance, used to select the approriate
 number of factors.}
 \item{\code{RMSE}}{gives the Root Mean Squared Error, used to compare models.}
 \item{\code{AIC}}{gives the bandwidth \eqn{h} used and two selection criteria
  to select the optimal bandwidth.}
-\item{\code{Density}}{the kernel density estimation performed.}
-\item{\code{Convergence}}{the value of the algorithm stopping criterion at
+\item{\code{density}}{the kernel density estimation performed.}
+\item{\code{convergence}}{the value of the algorithm stopping criterion at
 each loop.}
-\item{\code{Time}}{an indicator of the time taken by the function to perform
+\item{\code{time}}{an indicator of the time taken by the function to perform
 the fit.}
 }
 \description{
