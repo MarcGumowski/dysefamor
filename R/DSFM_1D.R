@@ -1042,7 +1042,8 @@ DSFM1DData <- function(y, x1=NULL) {
 
   } else if (is(y, "xts")) {
     x1          <- data.frame(x1)
-    date       <- data.frame(index(y) %x% rep(1, dim(x1)[1]))
+    date        <- data.frame(as.Date(index(y) %x% rep(1, dim(x1)[1]),
+                                      origin = "1970-01-01"))
     y           <- data.frame(c(t(y)))
     data        <- data.frame(date, y, x1)
   } else {
