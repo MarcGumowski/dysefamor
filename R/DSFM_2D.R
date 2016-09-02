@@ -116,7 +116,7 @@
 #'
 #' # Set the parameters ------------------------------------------------------- #
 #' h        <- c(0.05, 0.05)
-#' L        <- 3
+#' L        <- 4
 #'
 #' # Fit the model ------------------------------------------------------------ #
 #' dsfmFit  <- DSFM(dsfmData, h = h, L = L)
@@ -496,7 +496,8 @@ summary.DSFM2D <- function(object, ...) {
 #'
 #' @param x an \code{object} of class \code{"DSFM1D"}.
 #' @param which to choose between \code{"all"},\code{"loadings"},
-#' #' \code{"functions"},\code{"convergence"}, and \code{"fit"}.
+#' #' \code{"functions"},\code{"convergence"}, \code{"residuals"},
+#' and \code{"fit"}.
 #' @param n number of time indicator to be plotted.
 #' @param ask logical; if TRUE, the user is asked before each plot, see
 #' \code{\link{par}}(ask=.).
@@ -544,7 +545,7 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
   par(ask = ask)
 
   if ("all" %in% which) {
-    which = c("convergence", "loadings", "functions", "fit")
+    which = c("convergence", "loadings", "functions", "residuals", "fit")
   }
 
   # Convergence Plot
@@ -584,6 +585,49 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
     }
     layout(matrix(1))
   }
+  # Residuals
+  if ("residuals" %in% which) {
+
+    x1    <- unique(x$residuals$x1[which(x$residuals$Date == date[n])])
+    x2    <- unique(x$data$x2[which(x$data$Date == date[n])])
+    J     <- length(x1) * length(x2)
+    Y     <- matrix(x$residuals$residuals[which(x$residuals$Date == date[n])],
+                    length(x1), length(x2), byrow = T)
+    switch(pal,
+           pink = {
+             jetColors <- colorRampPalette(c("#1E0000", "#402525",
+                                             "#C27E7E", "#E8E8B4", "#FFFFFF"))
+           },
+           blue = {
+             jetColors <- colorRampPalette(c("#F6EFF7", "#BDC9E1",
+                                             "#67A9CF", "#1C9099", "#016C59"))
+           },
+           light = {
+             jetColors <- colorRampPalette(c("#3FB8AF", "#7FC7AF",
+                                             "#DAD8A7", "#FF9E9D", "#FF3D7F"))
+           },
+           dark = {
+             jetColors <- colorRampPalette(c("#556270", "#4ECDC4",
+                                             "#C7F464", "#FF6B6B", "#C44D58"))
+           },
+           stop('Invalid pal Parameter. Valid Parameters are: "pink", "blue",
+                "light, "dark".')
+           )
+    color <- jetColors(200)
+
+    layout(matrix(1:2, 1, 2))
+
+    nrz <- nrow(Y)
+    ncz <- ncol(Y)
+    zFacet <- (Y[-1, -1] + Y[-1, -ncz] + Y[-nrz, -1] + Y[-nrz, -ncz]) / 4
+    facetCol <- cut(zFacet, 200)
+    persp(x1, x2, Y, xlab = names(x$data)[3], ylab = names(x$data)[4],
+          zlab = names(x$data)[2], col = color[facetCol],
+          main = paste("Y -", date[n]), theta = theta, border = border,
+          box = box, shade = shade, expand = expand, ticktype = ticktype, ...)
+
+  }
+  # Y
   if ("fit" %in% which) {
 
     x1    <- unique(x$data$x1[which(x$data$Date == date[n])])
@@ -632,11 +676,11 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
                  YHat[-nrz, -ncz]) / 4
     facetCol <- cut(zFacet, 200)
     persp(x1, x2, YHat, xlab = names(x$data)[3],
-          ylab = names(x$data)[4], zlab = names(x$data)[2],
-          col = color[facetCol],
-          main = bquote(hat(Y) ~"-"~.(as.character(date)[n])), theta = theta,
-          border = border, box = box, shade = shade, expand = expand,
-          ticktype = ticktype, ...)
+           ylab = names(x$data)[4], zlab = names(x$data)[2],
+           col = color[facetCol],
+           main = bquote(hat(Y) ~"-"~.(as.character(date)[n])), theta = theta,
+           border = border, box = box, shade = shade, expand = expand,
+           ticktype = ticktype, ...)
     layout(matrix(1))
   }
 

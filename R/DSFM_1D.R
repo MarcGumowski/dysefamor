@@ -121,7 +121,7 @@
 #' # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 #' data(canadianYieldCurves)
 #' maturity <- c(1/4, 1/2, 3/4, 1:10, 20, 30)
-#' dsfmData <- DSFM1DData(canadianYieldCurves[1:100, ], maturity)
+#' dsfmData <- DSFM1DData(canadianYieldCurves[1:400, ], maturity)
 #' dsfmData
 #' plot(dsfmData)
 #'
@@ -531,7 +531,7 @@ summary.DSFM1D <- function(object, ...) {
 #'
 #' @param x an \code{object} of class \code{"DSFM1D"}.
 #' @param which to choose between \code{"all"},\code{"loadings"}.
-#' \code{"functions"},\code{"convergence"}, and \code{"fit"}.
+#' \code{"functions"},\code{"convergence"}, \code{"residuals"}, and \code{"fit"}.
 #' @param ask logical; if TRUE, the user is asked before each plot, see
 #' \code{\link{par}}(ask=.).
 #' @param pal the color palette for the fit plot. To choose between
@@ -579,7 +579,7 @@ plot.DSFM1D <- function(x, which = "all", ask = TRUE, pal = "pink",
   par(ask = ask)
 
   if ("all" %in% which) {
-    which = c("convergence", "loadings", "functions", "fit")
+    which = c("convergence", "loadings", "functions", "residuals", "fit")
   }
   # Convergence Plot
   if ("convergence" %in% which) {
@@ -615,6 +615,45 @@ plot.DSFM1D <- function(x, which = "all", ask = TRUE, pal = "pink",
            col = col, type = type, ...)
     }
     layout(matrix(1))
+  }
+  # Residuals
+  if ("residuals" %in% which) {
+    I     <- dim(x$residuals)[1]
+    J     <- dim(x$residuals)[2] - 1
+    x1    <- seq(1, I) / I
+    x2    <- x$x1
+    Y     <- t(t(x$residuals[ ,2:dim(x$residuals)[2]]))
+
+    switch(pal,
+           pink = {
+             jetColors <- colorRampPalette(c("#1E0000", "#402525",
+                                             "#C27E7E", "#E8E8B4", "#FFFFFF"))
+           },
+           blue = {
+             jetColors <- colorRampPalette(c("#F6EFF7", "#BDC9E1",
+                                             "#67A9CF", "#1C9099", "#016C59"))
+           },
+           light = {
+             jetColors <- colorRampPalette(c("#3FB8AF", "#7FC7AF",
+                                             "#DAD8A7", "#FF9E9D", "#FF3D7F"))
+           },
+           dark = {
+             jetColors <- colorRampPalette(c("#556270", "#4ECDC4",
+                                             "#C7F464", "#FF6B6B", "#C44D58"))
+           },
+           stop('Invalid pal Parameter. Valid Parameters are: "pink", "blue",
+                "light, "dark".')
+           )
+    color <- jetColors(200)
+
+    nrz <- nrow(Y)
+    ncz <- ncol(Y)
+    zFacet <- (Y[-1, -1] + Y[-1, -ncz] + Y[-nrz, -1] + Y[-nrz, -ncz]) / 4
+    facetCol <- cut(zFacet, 200)
+    persp(x1, x2, Y, xlab = "Time", ylab = "x", zlab = "Y",
+          col = color[facetCol], main ="Residuals", theta = theta,
+          border = border, box = box, shade = shade, expand = expand,
+          ticktype = ticktype, ...)
   }
   # Y
   if ("fit" %in% which) {

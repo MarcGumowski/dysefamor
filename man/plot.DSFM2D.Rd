@@ -12,7 +12,8 @@
 \item{x}{an \code{object} of class \code{"DSFM1D"}.}
 
 \item{which}{to choose between \code{"all"},\code{"loadings"},
-#' \code{"functions"},\code{"convergence"}, and \code{"fit"}.}
+#' \code{"functions"},\code{"convergence"}, \code{"residuals"},
+and \code{"fit"}.}
 
 \item{n}{number of time indicator to be plotted.}
 
