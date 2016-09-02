@@ -48,6 +48,6 @@ Plots the 3D vizualisation of the data set contained in \code{object} of class
 \code{DSFM2DData}.
 }
 \seealso{
-\code{\link{dataDSFM2D}}, \code{\link{summary.DSFM2DData}}.
+\code{\link{DSFM2DData}}, \code{\link{summary.DSFM2DData}}.
 }
 

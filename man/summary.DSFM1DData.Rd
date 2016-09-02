@@ -19,6 +19,6 @@ statistics of the data set given in \code{object}.
 \code{summary} method for class \code{"DSFM1DData"}.
 }
 \seealso{
-\code{\link{dataDSFM1D}}, \code{\link{plot.DSFM1DData}}.
+\code{\link{DSFM1DData}}, \code{\link{plot.DSFM1DData}}.
 }
 

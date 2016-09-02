@@ -55,6 +55,6 @@ URL http://CRAN.R-project.org/package=akima
 \seealso{
 \code{\link{VAR}},\code{\link{predict.varest}},
 \code{\link{interp}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
-\code{\link{dataDSFM2D}}.
+\code{\link{DSFM2DData}}.
 }
 

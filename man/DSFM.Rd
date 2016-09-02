@@ -11,7 +11,7 @@ DSFM(data, numDataPoints = 25, h = 0.05, L = 3, initialLoad = "WN",
 \item{data}{a matrix containing time indicator in first row, value
 \eqn{Y_{t,j}} in second row, and the coordinates \eqn{X_{t,j}} in the
 remaining rows. Proper formatting has to be done using the
- \code{\link{dataDSFM1D}} or \code{\link{dataDSFM2D}} functions.}
+ \code{\link{DSFM1DData}} or \code{\link{DSFM2DData}} functions.}
 
 \item{numDataPoints}{the number of points in the axis of the grid to perform
 the kernel density estimation.}
@@ -37,7 +37,7 @@ convergence rate.}
 \code{DSFM} returns an object of class \code{"DSFM1D"} or
 \code{"DSFM2D"} depending on the dimension of the input data.
 
-The generic functions \code{print},\code{summary}, \code{plot} and
+The generic functions \code{print}, \code{summary}, \code{plot} and
 \code{predict} are available.
 
 An object of class \code{"DSFM1D"} is a list containing the following
@@ -104,7 +104,7 @@ proper definition of each criterion can be found in references.
 # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 data(canadianYieldCurves)
 maturity <- c(1/4, 1/2, 3/4, 1:10, 20, 30)
-dsfmData <- dataDSFM1D(canadianYieldCurves[1:100, ], maturity)
+dsfmData <- DSFM1DData(canadianYieldCurves[1:100, ], maturity)
 dsfmData
 plot(dsfmData)
 
@@ -169,7 +169,7 @@ possibilities.
 \code{\link{predict.DSFM1D}} / \code{\link{predict.DSFM2D}} provide succint
 predictions.
 
-\code{\link{dataDSFM1D}} / \code{\link{dataDSFM2D}} have to be used before
+\code{\link{DSFM1DData}} / \code{\link{DSFM2DData}} have to be used before
 using the \code{\link{DSFM}} function to ensure that the data are correctly
 formated.
 

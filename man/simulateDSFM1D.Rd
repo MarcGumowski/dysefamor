@@ -30,7 +30,7 @@ constant.}
 \value{
 \code{simulateDSFM1D} returns a list containing:
 \item{\code{dataSim}}{an object of class \code{"DSFM1DData"}, output of the
-\code{\link{dataDSFM1D}} function. This object can be immediatly used by the
+\code{\link{DSFM1DData}} function. This object can be immediatly used by the
 \code{\link{DSFM}} algorithm.}
 \item{\code{YSim}}{the simulated data in a more usual format.}
 \item{\code{Z_tl}}{the simulated factor loadings.}
@@ -66,6 +66,6 @@ Bliss, Robert R.(1997). "Testing Term Structure Estimation Methods".
 In: \emph{Advances in Futures and Options Research 9}, pp. 197-231.
 }
 \seealso{
-\code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}}.
+\code{\link{DSFM1DData}}, \code{\link{DSFM}}, \code{\link{DSFM1D}}.
 }
 

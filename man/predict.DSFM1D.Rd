@@ -41,6 +41,6 @@ URL http://www.jstatsoft.org/v27/i04/.
 }
 \seealso{
 \code{\link{VAR}},\code{\link{predict.varest}}, \code{\link{DSFM}},
-\code{\link{DSFM1D}},\code{\link{dataDSFM1D}}.
+\code{\link{DSFM1D}},\code{\link{DSFM1DData}}.
 }
 

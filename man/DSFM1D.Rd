@@ -11,7 +11,7 @@ DSFM1D(data, numDataPoints = 25, h = 0.5, L = 3, initialLoad = "WN",
 \item{data}{a matrix containing time indicator in first row, value
 \eqn{Y_{t,j}} in second row, and the coordinates \eqn{X_{t,j}} in the
 remaining row. Proper formatting has to be done using the
-\code{\link{dataDSFM1D}}.}
+\code{\link{DSFM1DData}}.}
 
 \item{numDataPoints}{the number of points in the axis of the grid to perform
 the kernel density estimation.}
@@ -96,7 +96,7 @@ proper definition of each criterion can be found in references.
 # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 data(canadianYieldCurves)
 maturity <- c(1/4, 1/2, 3/4, 1:10, 20, 30)
-dsfmData <- dataDSFM1D(canadianYieldCurves[1:100, ], maturity)
+dsfmData <- DSFM1DData(canadianYieldCurves[1:100, ], maturity)
 dsfmData
 plot(dsfmData)
 
@@ -140,7 +140,7 @@ possibilities.
 \code{\link{predict.DSFM1D}} provide succint
 predictions.
 
-\code{\link{dataDSFM1D}} has to be used before
+\code{\link{DSFM1DData}} has to be used before
 using the \code{\link{DSFM}} function to ensure that the data are correctly
 formated.
 

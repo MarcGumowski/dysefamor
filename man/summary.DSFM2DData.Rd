@@ -20,6 +20,6 @@ directions.
 \code{summary} method for class \code{"DSFM2DData"}.
 }
 \seealso{
-\code{\link{dataDSFM2D}}, \code{\link{plot.DSFM2DData}}.
+\code{\link{DSFM2DData}}, \code{\link{plot.DSFM2DData}}.
 }
 

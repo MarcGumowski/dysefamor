@@ -11,7 +11,7 @@ DSFM2D(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
 \item{data}{a matrix containing time indicator in first row, value
 \eqn{Y_{t,j}} in second row, and the coordinates \eqn{X_{t,j}} in the two
 remaining rows. Proper formatting has to be done using the
-\code{\link{dataDSFM2D}}.}
+\code{\link{DSFM2DData}}.}
 
 \item{numDataPoints}{the number of points in the axis of the grid to perform
 the kernel density estimation.}
@@ -130,7 +130,7 @@ possibilities.
 \code{\link{predict.DSFM2D}} provide succint
 predictions.
 
-\code{\link{dataDSFM2D}} has to be used before
+\code{\link{DSFM2DData}} has to be used before
 using the \code{\link{DSFM}} function to ensure that the data are correctly
 formated.
 

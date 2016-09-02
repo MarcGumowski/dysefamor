@@ -41,7 +41,7 @@
 #' @param data a matrix containing time indicator in first row, value
 #' \eqn{Y_{t,j}} in second row, and the coordinates \eqn{X_{t,j}} in the two
 #' remaining rows. Proper formatting has to be done using the
-#' \code{\link{dataDSFM2D}}.
+#' \code{\link{DSFM2DData}}.
 #' @param numDataPoints the number of points in the axis of the grid to perform
 #' the kernel density estimation.
 #' @param h the bandwidth used to perform the kernel density estimation. can be
@@ -100,7 +100,7 @@
 #' \code{\link{predict.DSFM2D}} provide succint
 #' predictions.
 #'
-#' \code{\link{dataDSFM2D}} has to be used before
+#' \code{\link{DSFM2DData}} has to be used before
 #' using the \code{\link{DSFM}} function to ensure that the data are correctly
 #' formated.
 #'
@@ -438,7 +438,7 @@ print.DSFM2D <- function(x, ...){
 #' of-fit between models.}
 #' \item{\code{Bw}}{The bandwidth and its selection criteria.}
 #'
-#' @seealso \code{\link{dataDSFM2D}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
+#' @seealso \code{\link{DSFM2DData}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
 #' \code{\link{plot.DSFM2D}}, \code{\link{predict.DSFM2D}}.
 #'
 #' @export
@@ -518,7 +518,7 @@ summary.DSFM2D <- function(object, ...) {
 #' plots.
 #' @param ... other parameters to be passed through to plotting functions.
 #'
-#' @seealso \code{\link{dataDSFM2D}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
+#' @seealso \code{\link{DSFM2DData}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
 #' \code{\link{summary.DSFM2D}}, \code{\link{predict.DSFM2D}}.
 #'
 #' @export
@@ -669,7 +669,7 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
 #'
 #' @seealso \code{\link{VAR}},\code{\link{predict.varest}},
 #' \code{\link{interp}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
-#' \code{\link{dataDSFM2D}}.
+#' \code{\link{DSFM2DData}}.
 #'
 #' @references Bernhard Pfaff (2008). VAR, SVAR and SVEC Models: Implementation
 #' Within R Package vars. In: \emph{Journal of Statistical Software 27(4)}.
@@ -737,7 +737,7 @@ predict.DSFM2D <- function(object, nAhead = 12,
   ZHatForecast            <- data.frame(dateForecast, ts(ZHatForecast))
   names(ZHatForecast)     <- c("Date", paste0("Z_t", 0:L, ".hat"))
   names(YHatForecastList) <- dateForecast
-  YHatForecast            <- dataDSFM2D(YHatForecastList,x1Forecast,x2Forecast)
+  YHatForecast            <- DSFM2DData(YHatForecastList,x1Forecast,x2Forecast)
 
   predict <- list(YHatForecast = YHatForecast,
                   YHatForecastList = YHatForecastList,
@@ -798,13 +798,13 @@ print.predict.DSFM2D <- function(x, ...) {
 #'
 #' @return \code{simulateDSFM2D} returns a list containing:
 #' \item{\code{dataSim}}{an object of class \code{"DSFM2DData"}, output of the
-#' \code{\link{dataDSFM2D}} function. This object can be immediatly used by the
+#' \code{\link{DSFM2DData}} function. This object can be immediatly used by the
 #' \code{\link{DSFM}} algorithm.}
 #' \item{\code{YSim}}{the simulated data in a more usual format.}
 #' \item{\code{Z_tl}}{the simulated factor loadings.}
 #' \item{\code{m_l}}{the factors functions used to compute the DSFM.}
 #'
-#' @seealso \code{\link{dataDSFM2D}}, \code{\link{DSFM}}, \code{\link{DSFM2D}}.
+#' @seealso \code{\link{DSFM2DData}}, \code{\link{DSFM}}, \code{\link{DSFM2D}}.
 #'
 #' @export
 #'
@@ -860,7 +860,7 @@ simulateDSFM2D <- function(n = 10 , x1 = 1:25 / 25, x2 = 1:25 / 25, L = 3,
   Zs          <- data.frame(date, Zs)
   names(Zs)   <- c("Date", paste0("Z_t", 0:L))
 
-  dataSim     <- dataDSFM2D(YSim,x1,x2)
+  dataSim     <- DSFM2DData(YSim,x1,x2)
   listData    <- list(dataSim = dataSim, YSim = YSim, Z_tl = Zs, m_l = m)
 
   return(listData)
@@ -889,15 +889,15 @@ simulateDSFM2D <- function(n = 10 , x1 = 1:25 / 25, x2 = 1:25 / 25, L = 3,
 #' @param x1 a numeric vector of the covariates x1.
 #' @param x2 a numeric vector of the covariates x2.
 #'
-#' @return \code{dataDSFM2D} returns a list, which belongs to the class
+#' @return \code{DSFM2DData} returns a list, which belongs to the class
 #' \code{"DSFM2DData"}. The list contains the dates, the responses and
 #' the covariates in four distinct columns.
 #'
-#' The generic functions \code{print},\code{summary}, and \code{plot}
+#' The generic functions \code{print}, \code{summary}, and \code{plot}
 #' are available for this class.
 #'
 #' @note If the data set contains different covariates for each dates, the data
-#' has to be formatted manually then inserted in the \code{dataDSFM2D}
+#' has to be formatted manually then inserted in the \code{DSFM2DData}
 #' function to obtain an object of class \code{DSFM2DData}.
 #'
 #' The correct format is a four columns \code{data.frame} containing a time
@@ -908,7 +908,7 @@ simulateDSFM2D <- function(n = 10 , x1 = 1:25 / 25, x2 = 1:25 / 25, L = 3,
 #'
 #' @export
 #'
-dataDSFM2D <- function(y,x1=NULL,x2=NULL) {
+DSFM2DData <- function(y,x1=NULL,x2=NULL) {
 
   if (is.list(y) == FALSE) {
     if (dim(y)[2] == 4) {
@@ -961,7 +961,7 @@ print.DSFM2DData <- function(x, ...) {
 #' statistics of the data set given in \code{object} for each covariates
 #' directions.
 #'
-#' @seealso \code{\link{dataDSFM2D}}, \code{\link{plot.DSFM2DData}}.
+#' @seealso \code{\link{DSFM2DData}}, \code{\link{plot.DSFM2DData}}.
 #'
 #' @export
 #'
@@ -1037,7 +1037,7 @@ summary.DSFM2DData <- function(object, ...) {
 #' @param ... other parameters to be passed through to plotting
 #' \code{\link{persp}} function.
 #'
-#' @seealso \code{\link{dataDSFM2D}}, \code{\link{summary.DSFM2DData}}.
+#' @seealso \code{\link{DSFM2DData}}, \code{\link{summary.DSFM2DData}}.
 #'
 #' @export
 #'

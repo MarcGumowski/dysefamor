@@ -58,7 +58,7 @@ estimated loadings for each factor, a plot of the estimated factor functions,
 and a plot of the fit. By default, the four plots are provided.
 }
 \seealso{
-\code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
+\code{\link{DSFM1DData}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
 \code{\link{summary.DSFM1D}}, \code{\link{predict.DSFM1D}}.
 }
 

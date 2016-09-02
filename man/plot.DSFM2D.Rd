@@ -61,7 +61,7 @@ and a plot of the fit for a given time. By default, the four plots are
 provided.
 }
 \seealso{
-\code{\link{dataDSFM2D}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
+\code{\link{DSFM2DData}}, \code{\link{DSFM}}, \code{\link{DSFM2D}},
 \code{\link{summary.DSFM2D}}, \code{\link{predict.DSFM2D}}.
 }
 

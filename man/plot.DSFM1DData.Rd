@@ -45,6 +45,6 @@ Plots the 3D vizualisation of the data set contained in \code{object} of class
 \code{DSFM1DData}.
 }
 \seealso{
-\code{\link{dataDSFM1D}}, \code{\link{summary.DSFM1DData}}.
+\code{\link{DSFM1DData}}, \code{\link{summary.DSFM1DData}}.
 }
 

@@ -23,7 +23,7 @@ the noise.}
 \value{
 \code{simulateDSFM2D} returns a list containing:
 \item{\code{dataSim}}{an object of class \code{"DSFM2DData"}, output of the
-\code{\link{dataDSFM2D}} function. This object can be immediatly used by the
+\code{\link{DSFM2DData}} function. This object can be immediatly used by the
 \code{\link{DSFM}} algorithm.}
 \item{\code{YSim}}{the simulated data in a more usual format.}
 \item{\code{Z_tl}}{the simulated factor loadings.}
@@ -39,6 +39,6 @@ independant AR(1) process and the factors functions are predefined to be
 orthogonals.
 }
 \seealso{
-\code{\link{dataDSFM2D}}, \code{\link{DSFM}}, \code{\link{DSFM2D}}.
+\code{\link{DSFM2DData}}, \code{\link{DSFM}}, \code{\link{DSFM2D}}.
 }
 

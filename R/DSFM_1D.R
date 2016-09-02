@@ -41,7 +41,7 @@
 #' @param data a matrix containing time indicator in first row, value
 #' \eqn{Y_{t,j}} in second row, and the coordinates \eqn{X_{t,j}} in the
 #' remaining row. Proper formatting has to be done using the
-#' \code{\link{dataDSFM1D}}.
+#' \code{\link{DSFM1DData}}.
 #' @param numDataPoints the number of points in the axis of the grid to perform
 #' the kernel density estimation.
 #' @param h the bandwidth used to perform the kernel density estimation. Can be
@@ -107,7 +107,7 @@
 #' \code{\link{predict.DSFM1D}} provide succint
 #' predictions.
 #'
-#' \code{\link{dataDSFM1D}} has to be used before
+#' \code{\link{DSFM1DData}} has to be used before
 #' using the \code{\link{DSFM}} function to ensure that the data are correctly
 #' formated.
 #'
@@ -119,7 +119,7 @@
 #' # Interest rate of zero-coupon bond yield curves. Data from Bank of Canada.
 #' data(canadianYieldCurves)
 #' maturity <- c(1/4, 1/2, 3/4, 1:10, 20, 30)
-#' dsfmData <- dataDSFM1D(canadianYieldCurves[1:100, ], maturity)
+#' dsfmData <- DSFM1DData(canadianYieldCurves[1:100, ], maturity)
 #' dsfmData
 #' plot(dsfmData)
 #'
@@ -470,7 +470,7 @@ print.DSFM1D <- function(x, ...) {
 #' of-fit between models.}
 #' \item{\code{Bw}}{The bandwidth and its selection criteria.}
 #'
-#' @seealso \code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
+#' @seealso \code{\link{DSFM1DData}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
 #' \code{\link{plot.DSFM1D}}, \code{\link{predict.DSFM1D}}.
 #'
 #' @export
@@ -551,7 +551,7 @@ summary.DSFM1D <- function(object, ...) {
 #' plots.
 #' @param ... other parameters to be passed through to plotting functions.
 #'
-#' @seealso \code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
+#' @seealso \code{\link{DSFM1DData}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
 #' \code{\link{summary.DSFM1D}}, \code{\link{predict.DSFM1D}}.
 #'
 #' @export
@@ -691,7 +691,7 @@ plot.DSFM1D <- function(x, which = "all", ask = TRUE, pal = "pink",
 #' \item{\code{nAhead}}{the number of steps ahead.}
 #'
 #' @seealso \code{\link{VAR}},\code{\link{predict.varest}}, \code{\link{DSFM}},
-#' \code{\link{DSFM1D}},\code{\link{dataDSFM1D}}.
+#' \code{\link{DSFM1D}},\code{\link{DSFM1DData}}.
 #'
 #' @references Bernhard Pfaff (2008). VAR, SVAR and SVEC Models: Implementation
 #' Within R Package vars. In: \emph{Journal of Statistical Software 27(4)}.
@@ -754,7 +754,7 @@ predict.DSFM1D <- function(object, nAhead = 12, p = 1, ...) {
   names(ZHatForecast)  <- c("Date", paste0("Z_t", 0:L, ".hat"))
   YHatForecastMatrix   <- data.frame(dateForecast, YHatForecastMatrix)
   names(YHatForecastMatrix)  <- names(object$YHat)
-  YHatForecast         <- dataDSFM1D(YHatForecastMatrix,object$x1)
+  YHatForecast         <- DSFM1DData(YHatForecastMatrix,object$x1)
 
   predict <- list(YHatForecast = YHatForecast,
                   YHatForecastMatrix = YHatForecastMatrix,
@@ -829,7 +829,7 @@ print.predict.DSFM1D <- function(x, ...) {
 #'
 #' @return \code{simulateDSFM1D} returns a list containing:
 #' \item{\code{dataSim}}{an object of class \code{"DSFM1DData"}, output of the
-#' \code{\link{dataDSFM1D}} function. This object can be immediatly used by the
+#' \code{\link{DSFM1DData}} function. This object can be immediatly used by the
 #' \code{\link{DSFM}} algorithm.}
 #' \item{\code{YSim}}{the simulated data in a more usual format.}
 #' \item{\code{Z_tl}}{the simulated factor loadings.}
@@ -846,7 +846,7 @@ print.predict.DSFM1D <- function(x, ...) {
 #' Bliss, Robert R.(1997). "Testing Term Structure Estimation Methods".
 #' In: \emph{Advances in Futures and Options Research 9}, pp. 197-231.
 #'
-#' @seealso \code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}}.
+#' @seealso \code{\link{DSFM1DData}}, \code{\link{DSFM}}, \code{\link{DSFM1D}}.
 #'
 #' @export
 #'
@@ -896,7 +896,7 @@ simulateDSFM1D <- function(model = "ns", n = 100, x1 = 1:30, L = 3,
     YSim      <- data.frame(date, YSim)
     Zs        <- data.frame(date, Zs)
     names(Zs) <- c("Date", namesZs)
-    dataSim   <- dataDSFM1D(YSim, x1)
+    dataSim   <- DSFM1DData(YSim, x1)
 
     listData  <- list(dataSim = dataSim, YSim = YSim, Z_tl = Zs, m_l = m,
                       x1 = x1)
@@ -942,7 +942,7 @@ simulateDSFM1D <- function(model = "ns", n = 100, x1 = 1:30, L = 3,
     YSim      <- data.frame(date, YSim)
     Zs        <- data.frame(date, Zs, row.names = NULL)
     names(Zs) <- c("Date", namesZs)
-    dataSim   <- dataDSFM1D(YSim, x1)
+    dataSim   <- DSFM1DData(YSim, x1)
     listData  <- list(dataSim = dataSim, YSim = YSim, Z_tl = Zs, x1 = x1,
                       tau = tau)
   }
@@ -969,11 +969,11 @@ simulateDSFM1D <- function(model = "ns", n = 100, x1 = 1:30, L = 3,
 #' \code{y} for each covariates.
 #' @param x1 a numeric vector of the covariates.
 #'
-#' @return \code{dataDSFM1D} returns a list, which belongs to the class
+#' @return \code{DSFM1DData} returns a list, which belongs to the class
 #' \code{"DSFM1DData"}. The list contains the dates, the responses, and
 #' the covariates in three distinct columns.
 #'
-#' The generic functions \code{print},\code{summary}, and \code{plot}
+#' The generic functions \code{print}, \code{summary}, and \code{plot}
 #' are available for this class.
 #'
 #' @note A data set with the correct \code{DSFM1D} class format can be
@@ -983,60 +983,72 @@ simulateDSFM1D <- function(model = "ns", n = 100, x1 = 1:30, L = 3,
 #'
 #' @export
 #'
-dataDSFM1D <- function(y, x1=NULL) {
+DSFM1DData <- function(y, x1=NULL) {
 
-  if (dim(y)[2] == 3) {
-    data        <- data.frame(y)
-    data[,1]    <- as.Date(data[,1])
-  } else {
-    x1   <- data.frame(x1)
-    date <- y[ ,1]
-    if (inherits(date, "Date")) {
-      date <- data.frame(as.Date(y[ ,1] %x% rep(1, dim(x1)[1]),
-                                 origin = "1970-01-01"))
+  if (is.null(attr(y, "class"))) {
 
-      # If Dates is not as format Date. Tries to deduce the correct dates
+    if (dim(y)[2] == 3) {
+      data        <- data.frame(y)
+      data[,1]    <- as.Date(data[,1])
     } else {
-      format <- gsub("[[:punct:]]", "-", y[ ,1])
-      format <- data.frame(read.table(text = format, sep = "-",
-                                      colClasses = "factor"))
-      if (max(as.numeric(format[ ,2])) <= 12) {
-        names(format)[2] <- "months"
-        if (nchar(as.character(format[1,1])) == 4) {
-          names(format)[1] <- "years"
-          names(format)[3] <- "days"
-        } else {
-          if (max(as.numeric(format[ ,1])) %in% 28:31) {
-            names(format)[1] <- "days"
-            names(format)[3] <- "years"
-          } else {
-            names(format)[3] <- "days"
-            names(format)[1] <- "years"
-          }
-        }
+      x1   <- data.frame(x1)
+      date <- y[ ,1]
+      if (inherits(date, "Date")) {
+        date <- data.frame(as.Date(y[ ,1] %x% rep(1, dim(x1)[1]),
+                                   origin = "1970-01-01"))
+
+        # If Dates is not as format Date. Tries to deduce the correct dates
       } else {
-        names(format)[2] <- "days"
-        if (nchar(as.character(format[1,1])) == 4) {
-          names(format)[1] <- "years"
-          names(format)[3] <- "months"
-        } else {
-          if (max(as.numeric(format[ ,1])) <= 12) {
-            names(format)[1] <- "months"
-            names(format)[3] <- "years"
+        format <- gsub("[[:punct:]]", "-", y[ ,1])
+        format <- data.frame(read.table(text = format, sep = "-",
+                                        colClasses = "factor"))
+        if (max(as.numeric(format[ ,2])) <= 12) {
+          names(format)[2] <- "months"
+          if (nchar(as.character(format[1,1])) == 4) {
+            names(format)[1] <- "years"
+            names(format)[3] <- "days"
           } else {
+            if (max(as.numeric(format[ ,1])) %in% 28:31) {
+              names(format)[1] <- "days"
+              names(format)[3] <- "years"
+            } else {
+              names(format)[3] <- "days"
+              names(format)[1] <- "years"
+            }
+          }
+        } else {
+          names(format)[2] <- "days"
+          if (nchar(as.character(format[1,1])) == 4) {
             names(format)[1] <- "years"
             names(format)[3] <- "months"
+          } else {
+            if (max(as.numeric(format[ ,1])) <= 12) {
+              names(format)[1] <- "months"
+              names(format)[3] <- "years"
+            } else {
+              names(format)[1] <- "years"
+              names(format)[3] <- "months"
+            }
           }
         }
-      }
 
-      date      <- paste(format$years, format$months, format$days, sep = "-")
-      date      <- c(t(matrix(rep(date, dim(x1)[1]), ncol = dim(x1)[1])))
-      date      <- as.Date(date)
+        date      <- paste(format$years, format$months, format$days, sep = "-")
+        date      <- c(t(matrix(rep(date, dim(x1)[1]), ncol = dim(x1)[1])))
+        date      <- as.Date(date)
+      }
+      y           <- data.frame(c(t(y[ ,2:length(y)])))
+      data        <- data.frame(date, y, x1)
     }
-    y           <- data.frame(c(t(y[ ,2:length(y)])))
+
+  } else if (is(y, "xts")) {
+    x1          <- data.frame(x1)
+    date       <- data.frame(index(y) %x% rep(1, dim(x1)[1]))
+    y           <- data.frame(c(t(y)))
     data        <- data.frame(date, y, x1)
+  } else {
+    stop("Invalid Object y")
   }
+
   names(data)   <- c("Date", "y", "x1")
   class(data)   <- "DSFM1DData"
   data$call     <- match.call()
@@ -1070,7 +1082,7 @@ print.DSFM1DData <- function(x, ...) {
 #' @return The function \code{summary.DSFM1DData} returns summary
 #' statistics of the data set given in \code{object}.
 #'
-#' @seealso \code{\link{dataDSFM1D}}, \code{\link{plot.DSFM1DData}}.
+#' @seealso \code{\link{DSFM1DData}}, \code{\link{plot.DSFM1DData}}.
 #'
 #' @export
 #'
@@ -1128,7 +1140,7 @@ summary.DSFM1DData <- function(object, ...) {
 #' @param ... other parameters to be passed through to plotting
 #' \code{\link{persp}} function.
 #'
-#' @seealso \code{\link{dataDSFM1D}}, \code{\link{summary.DSFM1DData}}.
+#' @seealso \code{\link{DSFM1DData}}, \code{\link{summary.DSFM1DData}}.
 #'
 #' @export
 #'

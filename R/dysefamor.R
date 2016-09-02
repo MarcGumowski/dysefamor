@@ -12,7 +12,7 @@
 #'
 #' @section Inner DSFM1D functions:
 #' \itemize{
-#' \item{\code{\link{dataDSFM1D}}}
+#' \item{\code{\link{DSFM1DData}}}
 #' \item{\code{\link{summary.DSFM1DData}}}
 #' \item{\code{\link{plot.DSFM1DData}}}
 #' \item{\code{\link{DSFM1D}}}
@@ -23,7 +23,7 @@
 #'
 #' @section Inner DSFM2D functions:
 #' \itemize{
-#' \item{\code{\link{dataDSFM2D}}}
+#' \item{\code{\link{DSFM2DData}}}
 #' \item{\code{\link{summary.DSFM2DData}}}
 #' \item{\code{\link{plot.DSFM2DData}}}
 #' \item{\code{\link{DSFM2D}}}

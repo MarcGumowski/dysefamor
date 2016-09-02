@@ -26,7 +26,7 @@ of-fit between models.}
 \code{summary} method for class \code{"DSFM1D"}.
 }
 \seealso{
-\code{\link{dataDSFM1D}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
+\code{\link{DSFM1DData}}, \code{\link{DSFM}}, \code{\link{DSFM1D}},
 \code{\link{plot.DSFM1D}}, \code{\link{predict.DSFM1D}}.
 }
 
