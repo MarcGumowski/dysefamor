@@ -454,7 +454,7 @@ print.DSFM1D <- function(x, ...) {
   cat("\nBandwidth Selection Criteria:\n")
   print(x$AIC, row.names = F)
   cat("\nCovavriates:",x$x1,"\n")
-  cat("\nIterations:",x$Iterations,"\n")
+  cat("\nIterations:",x$iterations,"\n")
   cat("\n")
   print(x$Time)
 }
