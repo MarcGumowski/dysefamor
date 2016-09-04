@@ -403,7 +403,7 @@ DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
   rownames(EV)     <- NULL
   names(EV)        <- paste0("EV(L = ", L, ")")
   AIC              <- data.frame(t(c(unique(h), AIC2, SC1)))
-  names(AIC)       <- c(paste0("h", 1:length(unique(h))), "wAIC_2", "wSC_1")
+  names(AIC)       <- c(paste0("h", 1:length(unique(h))), "wAIC", "wSC")
   h                <- data.frame(h)
   names(h)         <- "h"
   residuals        <- data.frame(date, residuals)

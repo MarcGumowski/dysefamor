@@ -373,7 +373,7 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
   names(EV)        <- paste0("EV(L = ", L, ")")
   names(RMSE)      <- "RMSE"
   AIC              <- data.frame(t(c(unique(h), AIC2, SC1)))
-  names(AIC)       <- c("h1", "h2", "wAIC_2", "wSC_1")
+  names(AIC)       <- c("h1", "h2", "wAIC", "wSC")
   h                <- data.frame(h)
   names(h)         <- c("h1","h2")
   residuals        <- data.frame(date, residuals, data$x1, data$x2)
