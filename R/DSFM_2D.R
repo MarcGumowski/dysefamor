@@ -351,13 +351,13 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
     Kh    <- (1 / (h[1,1] * h[1,2])) * NormalKernel1D(0 / h[1,1])  %*%
       t(NormalKernel1D(0 / h[1,2]))
     # Weighted AIC_2
-    AIC2 <- (1 / N) * numerator * exp(2 * (L / N) * Kh * sum(w) /  sum(w*pHat))
+    wAIC <- (1 / N) * numerator * exp(2 * (L / N) * Kh * sum(w) /  sum(w*pHat))
     # Weighted SC_1
-    SC1  <- (1 / N) * numerator * exp(log(N) * (L / N) * Kh * sum(w) /
+    wSC  <- (1 / N) * numerator * exp(log(N) * (L / N) * Kh * sum(w) /
                                         sum(w*pHat))
   }else{
-    AIC2 <- NA
-    SC1  <- NA
+    wAIC <- NA
+    wSC  <- NA
   }
 
   # Outputs ------------------------------------------------------------------- #
@@ -372,7 +372,7 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
   EV               <- data.frame(EV)
   names(EV)        <- paste0("EV(L = ", L, ")")
   names(RMSE)      <- "RMSE"
-  AIC              <- data.frame(t(c(unique(h), AIC2, SC1)))
+  AIC              <- data.frame(t(c(unique(h), wAIC, wSC)))
   names(AIC)       <- c("h1", "h2", "wAIC", "wSC")
   h                <- data.frame(h)
   names(h)         <- c("h1","h2")
@@ -478,7 +478,7 @@ summary.DSFM2D <- function(object, ...) {
   cat("\nRoot Mean Squared Error:\n")
   print(object$RMSE, row.names = F)
 
-  if (is.na(object$AIC$wAIC_2) == F) {
+  if (is.na(object$AIC$wAIC) == F) {
     cat("\nBandwidth selection criteria:\n")
     print(object$AIC, row.names = F)
   }

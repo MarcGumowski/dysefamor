@@ -355,12 +355,12 @@ DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
   if (length(unique(h)) == 1) {
     Kh  <- (1 / unique(h)) * QuarticKernel1D(0 / unique(h))
     # Weighted AIC_2
-    AIC2 <- (1 / N) * numerator * exp(2 *
+    wAIC <- (1 / N) * numerator * exp(2 *
                                         (L / N) * Kh *
                                         ((sum(w) * delta) /
                                            (sum(w * pHat)) * delta))
     # Weighted SC_1
-    SC1  <- (1 / N) * numerator * exp(log(N) *
+    wSC  <- (1 / N) * numerator * exp(log(N) *
                                         (L / N) * Kh *
                                         ((sum(w) * delta) /
                                            (sum(w * pHat)) * delta))
@@ -371,18 +371,18 @@ DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
       (length(h[which(h == unique(h)[2])]) / length(h)) *
       (1 / unique(h)[2]) * QuarticKernel1D(0 / unique(h)[2])
     # Weighted AIC_2
-    AIC2 <- (1 / N) * numerator * exp(2 *
+    wAIC <- (1 / N) * numerator * exp(2 *
                                         (L / N) * Kh *
                                         ((sum(w) * delta) /
                                            (sum(w * pHat) * delta)))
     # Weighted SC_1
-    SC1  <- (1 / N) * numerator * exp(log(N) *
+    wSC  <- (1 / N) * numerator * exp(log(N) *
                                         (L / N) * Kh *
                                         ((sum(w) / (sum(w * pHat)) * delta)))
   } else {
     # If Local Bandwidth does not compute selection criteria then
-    AIC2 <- NA
-    SC1  <- NA
+    wAIC <- NA
+    wSC  <- NA
   }
 
 
@@ -402,7 +402,7 @@ DSFM1D <- function(data, numDataPoints = 25, h = 0.5, L = 3,
   EV               <- data.frame(EV)
   rownames(EV)     <- NULL
   names(EV)        <- paste0("EV(L = ", L, ")")
-  AIC              <- data.frame(t(c(unique(h), AIC2, SC1)))
+  AIC              <- data.frame(t(c(unique(h), wAIC, wSC)))
   names(AIC)       <- c(paste0("h", 1:length(unique(h))), "wAIC", "wSC")
   h                <- data.frame(h)
   names(h)         <- "h"
@@ -514,7 +514,7 @@ summary.DSFM1D <- function(object, ...) {
   cat("\nRoot Mean Squared Error:\n")
   print(object$RMSE, row.names = F)
 
-  if (is.na(object$AIC$wAIC_2) == F) {
+  if (is.na(object$AIC$wAIC) == F) {
     cat("\nBandwidth selection criteria:\n")
     print(object$AIC, row.names = F)
   }
