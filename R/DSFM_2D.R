@@ -312,8 +312,8 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
     m_l <- matrix(0, I, J[[t]])
     m_l <- replicate(L0, list(m_l))
     for (l in 1:L) {
-      m_l[[l]] <- akima::interp(u[ ,2], u[ ,1], mHat[ ,l], xo = x1[[t]],
-                                yo = x2[[t]], linear = F, extrap = T)$z
+      m_l[[l]] <- suppressWarnings(akima::interp(u[ ,2], u[ ,1], mHat[ ,l], xo = x1[[t]],
+                                yo = x2[[t]], linear = F, extrap = T)$z)
     }
     # Explained Variance - Model Size Selection --------- #
     YTHat <- c()
@@ -772,9 +772,9 @@ predict.DSFM2D <- function(object, nAhead = 12,
     m_l <- matrix(0, length(x1Forecast), length(x2Forecast))
     m_l <- replicate(L0, list(m_l))
     for (l in 1:L0) {
-      m_l[[l]] <- akima::interp(u[ ,2], u[ ,1], mHat[ ,l],
+      m_l[[l]] <- suppressWarnings(akima::interp(u[ ,2], u[ ,1], mHat[ ,l],
                                 xo = x1Forecast, yo = x2Forecast,
-                                linear = F, extrap = T)$z
+                                linear = F, extrap = T)$z)
     }
     # YHat_hj
     YTHat <- c()
