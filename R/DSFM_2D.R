@@ -541,6 +541,8 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
   L0    <- L + 1
   u1    <- unique(x$mHat[ ,1])
   u2    <- unique(x$mHat[ ,2])
+  u1    <- u1[order(u1)]
+  u2    <- u2[order(u2)]
 
   par(ask = ask)
 
