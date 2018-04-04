@@ -313,7 +313,7 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
     m_l <- replicate(L0, list(m_l))
     for (l in 1:L) {
       m_l[[l]] <- akima::interp(u[ ,2], u[ ,1], mHat[ ,l], xo = x1[[t]],
-                                yo = x2[[t]], linear = T, extrap = F)$z
+                                yo = x2[[t]], linear = F, extrap = T)$z
     }
     # Explained Variance - Model Size Selection --------- #
     YTHat <- c()
@@ -774,7 +774,7 @@ predict.DSFM2D <- function(object, nAhead = 12,
     for (l in 1:L0) {
       m_l[[l]] <- akima::interp(u[ ,2], u[ ,1], mHat[ ,l],
                                 xo = x1Forecast, yo = x2Forecast,
-                                linear = T, extrap = F)$z
+                                linear = F, extrap = T)$z
     }
     # YHat_hj
     YTHat <- c()
@@ -959,9 +959,9 @@ simulateDSFM2D <- function(n = 10 , x1 = 1:25 / 25, x2 = 1:25 / 25, L = 3,
 #'
 #' @export
 #'
-DSFM2DData <- function(y,x1=NULL,x2=NULL) {
+DSFM2DData <- function(y, x1 = NULL, x2 = NULL) {
 
-  if (is.list(y) == FALSE) {
+  if (is.data.frame(y)) {
     if (dim(y)[2] == 4) {
       data        <- data.frame(y)
       data[,1]    <- as.Date(data[,1])
