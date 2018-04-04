@@ -592,6 +592,8 @@ plot.DSFM2D <- function(x, which = "all", n = 1, ask = TRUE, pal = "pink",
 
     x1    <- unique(x$residuals$x1[which(x$residuals$Date == date[n])])
     x2    <- unique(x$data$x2[which(x$data$Date == date[n])])
+    x1    <- x1[order(x1)]
+    x2    <- x1[order(x2)]
     J     <- length(x1) * length(x2)
     Y     <- matrix(x$residuals$residuals[which(x$residuals$Date == date[n])],
                     length(x1), length(x2), byrow = T)
@@ -1100,6 +1102,8 @@ plot.DSFM2DData <- function(x, n = 1, pal = "pink", theta = 40,
 
   x1    <- unique(x$x1[which(x$Date == unique(x$Date)[n])])
   x2    <- unique(x$x2[which(x$Date == unique(x$Date)[n])])
+  x1    <- x1[order(x1)]
+  x2    <- x2[order(x2)]
   J     <- length(x1) * length(x2)
   Y     <- matrix(x$y[which(x$Date == unique(x$Date)[n])],
                   length(x1), length(x2), byrow = T)
