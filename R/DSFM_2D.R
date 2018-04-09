@@ -365,7 +365,7 @@ DSFM2D <- function(data, numDataPoints = 25, h = c(0.5, 0.5), L = 3,
   # Create data frames as outputs
   ZHat             <- data.frame(date, ZHat)
   names(ZHat)      <- c("Date", paste0("Z_t", 0:L, ".hat"))
-  mHat             <- data.frame(u * c(max(data$x1),max(data$x2)), mHat)
+  mHat             <- data.frame(t(t(u) * c(max(data$x1),max(data$x2))), mHat)
   names(mHat)      <- c("u1", "u2", paste0("m_", 0:L, ".hat"))
   YHat             <- data.frame(data$Date, YHat, data$x1, data$x2)
   names(YHat)      <- c("Date", "y.hat", "x1", "x2")
